@@ -6,12 +6,15 @@
 
 const app = require('../server/app');
 const http = require('http');
+const mongoose = require('mongoose')
+
+const MONGO = 'mongodb+srv://web450_admin:rAGW1990@web340db.93lxfky.mongodb.net/web450DB'
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort('3000');
 app.set('port', port);
 
 /**
@@ -24,9 +27,13 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+mongoose.connect(MONGO)
+  .then(() => { console.log('MongoDB Connected')})
+  .then(() => {
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  })
 
 /**
  * Normalize a port into a number, string, or false.
