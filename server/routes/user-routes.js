@@ -118,14 +118,107 @@ router.get('/users', async (req,res) => {
 
 router.get('/users/:userId', async (req, res) => {
 
-    //searches for employee based on the id variable.
+    //searches for user based on the id variable.
     const user = await User.findOne({ 'empId': req.params.userId })
 
     if(!user)
     {
-        //if there is no employee with that id, returns status 404 and a message that employee can't be found
+        //if there is no user with that id, returns status 404 and a message that user can't be found
         return res.status(404).json({error: "No user can be found"});
     }
-    //if successful, returns employee object
-    res.status(200).json(employee);
+    //if successful, returns user object
+    res.status(200).json(user);
+})
+
+/**
+ * updateUser
+ * @openapi
+ * /api/users/{userId}/:
+ *   put:
+ *     tags:
+ *       - Users
+ *     name: updateUser
+ *     description: Updates an existing user document
+ *     summary: Updates the information of tasks of an employee
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: Id of the user to update. 
+ *         schema: 
+ *           type: string
+ *     requestBody:
+ *       description: Employee information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - email
+ *               - firstName
+ *               - lastName
+ *               - password
+ *               - phoneNumber
+ *               - address
+ *               - isDisabled
+ *               - userId 
+ *               - role
+ *             properties:
+ *               email:
+ *                 type: string
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               phoneNumber: 
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               isDisabled:
+ *                 type: string
+ *               userId:
+ *                 type: string
+ *               role: 
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: User updated
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+
+router.put('/users/:userId', async (req, res) => {
+    try{
+        //Searches for user from the user database
+        const user = await User.findOne({ 'userId': req.params.userId })
+        //if no user exists, throws an error
+        if(!user){
+            res.status(401).json({ error: 'Invalid user Id'})
+        }
+        else {
+            //otherwise, sets the new user data
+            user.set({ 
+                email: req.body.email, 
+                firstName: req.body.firstName,
+                lastName: req.body.lastName, 
+                password: req.body.password, 
+                phoneNumber: req.body.phoneNumber, 
+                address: req.body.address, 
+                isDisabled: req.body.isDisabled, 
+                userId: req.body.userId ,
+                role: req.body.role
+            })
+
+            //saves the new user data to the database
+            user.save()
+            res.status(200).json(user)
+        }
+    }
+    catch (error) {
+        //throws an error if something goes wrong
+        res.status(500).json({ error: error.message })
+    }
 })
