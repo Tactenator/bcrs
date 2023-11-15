@@ -9,9 +9,27 @@
 const express = require('express')
 const createServer = require('http-errors')
 const path = require('path')
+const morgan = require('morgan');
+const cors = require('cors')
 
 // Create the Express app
 const app = express()
+app.use(cors())
+
+app.use(morgan('dev'));
+
+const userRoutes = require('./routes/user-routes')
+
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+  });
+
+app.use('/api', userRoutes)
 
 // Configure the app
 app.use(express.json())
