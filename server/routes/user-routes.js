@@ -47,8 +47,8 @@ const router = express.Router();
  */
 router.post('/users', async (req,res) => {
     //Grabs information from the req.body function to initialize variables.
-    const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role  } = req.body; 
     console.log(req.body)
+    const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role  } = req.body; 
 
     try{
         //creates a new customer. Checks to see if all parameters are met
@@ -119,7 +119,7 @@ router.get('/users', async (req,res) => {
 router.get('/users/:userId', async (req, res) => {
 
     //searches for user based on the id variable.
-    const user = await User.findOne({ 'empId': req.params.userId })
+    const user = await User.findOne({ 'userId': req.params.userId })
 
     if(!user)
     {

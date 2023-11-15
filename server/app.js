@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
   next();
   });
 
-app.use('/api', userRoutes)
-
-// Configure the app
+  // Configure the app
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '../dist/bcrs')))
 app.use('/', express.static(path.join(__dirname, '../dist/bcrs')))
+
+app.use('/api', userRoutes)
 
 // error handler for 404 errors
 app.use(function(req, res, next) {
