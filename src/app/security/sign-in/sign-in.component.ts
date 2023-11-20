@@ -1,4 +1,11 @@
+/**
+ * Title: sign-in.component.ts
+ * Author: Tiffany R., Patrick C.
+ * Date: 20 Nov 2023
+ * Description: sign-in component
+ */
 
+// importing class elements
 import { Component, OnInit } from '@angular/core';
 import { COOKIE_KEYS, SignInService } from './sign-in.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -32,11 +39,17 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInForm = this.fb.group({
-      userId: [
+      email: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern('^[0-9]*$'),
+          Validators.email
+        ]),
+      ],
+      password: [
+        '',
+        Validators.compose([
+          Validators.required
         ]),
       ],
     });
@@ -47,17 +60,30 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     const formValues = this.signInForm.value;
-    //this is how we capture the values of the form
 
-    const userId = parseInt(formValues.userId);
-
-    this.signInService.signIn(userId).subscribe({
+    this.signInService.signIn(formValues.email, formValues.password).subscribe({
       next: (employee) => {
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/']);
       },
       error(err) {
         console.log(err);
       },
     });
+  }
+
+  getEmailErrorMessage() {
+    const emailControl = this.signInForm.controls['email'];
+
+    if (emailControl.hasError('required')) {
+      return 'You must enter an email.';
+    }
+
+    return emailControl.hasError('email') ? 'Not a valid email.' : '';
+  }
+
+  getPasswordErrorMessage() {
+    const passwordControl = this.signInForm.controls['password'];
+
+    return passwordControl.hasError('required') ? 'You must enter a password.' : '';
   }
 }
