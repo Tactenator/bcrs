@@ -12,11 +12,11 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$dark-primary: mat.define-palette(mat.$red-palette);
+$dark-primary: mat.define-palette(mat.$red-palette, 900);
 $dark-accent: mat.define-palette(mat.$amber-palette, 400);
 
 // The warn palette is optional (defaults to red).
-$dark-warn: mat.define-palette(mat.$red-palette, 400);
+$dark-warn: mat.define-palette(mat.$orange-palette, 800);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -35,3 +35,8 @@ $dark-theme: mat.define-dark-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --color-primary: $dark-primary;
+  --color-accent: $dark-accent;
+  --color-warn: $dark-warn;
+}
