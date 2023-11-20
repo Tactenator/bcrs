@@ -1,1 +1,17 @@
-<nav></nav>
+<nav>
+  <div class="nav-fill">
+    <span class="material-icons" style="margin-left: 1%;"><a class="nav-logo" routerLink="/">computer</a></span>
+    <span class="material-icons" style="margin-left: 1%;"><a class="nav-logo" routerLink="/">build</a></span>
+  </div>
+  <mat-toolbar color="accent">
+    <mat-toolbar-row color="primary">
+      <span><a class="nav-title" routerLink="/">Bob's Computer Repair Shop</a></span>
+      <span class="spacer"></span>
+      <a mat-button class="nav-button" routerLink="/">Home</a>
+      <a mat-button class="nav-button" routerLink="/register">Register</a>
+      <a mat-button class="nav-button" routerLink="/signin">Sign In</a>
+      <a mat-button class="nav-button" routerLink="/about">About</a>
+      <a mat-button class="nav-button" routerLink="/contact">Contact</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</nav>
