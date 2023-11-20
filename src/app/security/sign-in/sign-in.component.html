@@ -1,0 +1,24 @@
+<!--
+  Title: sign-in.component.html
+  Author: Patrick Cuauro
+  Modified By: Patrick Cuauro
+  Date: 11/15/2023
+  Description: Sign In Component
+-->
+<!-- This could be done also with Angular Material -->
+<div class="sign-in-container">
+    <form (submit)="onSubmit()" signInform="ngForm">
+        <h1 class="sign-in-title">Account Sign-In</h1>
+        <h2 class="sign-in-subtitle">Please type your employee ID to login</h2>
+        <input required formControlName="userId" placeholder="Ex: 1007">
+        <button [disabled]="! signInform.valid" class="login-login">Sign-In</button>
+    </form>
+    <!-- <div class="msg-error" *ngIf="error">
+        {{ error }}
+      </div> -->
+    <div *ngIf="form['userId'].errors && form['userId'].dirty">
+        <div class="msg-error">
+            User ID must be a numeric value.
+        </div>
+    </div>
+</div>

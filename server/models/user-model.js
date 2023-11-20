@@ -53,7 +53,7 @@ const securityQuestionsSchema = new mongoose.Schema({
     }
 })
 
-//initializes the composer Schema
+//initializes the Schema
 const userSchema = new mongoose.Schema({
     "email":
     {
