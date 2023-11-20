@@ -19,6 +19,7 @@ app.use(cors())
 app.use(morgan('dev'));
 
 const userRoutes = require('./routes/user-routes')
+const securityRoutes = require('./routes/signin-route')
 
 
 app.use(function (req, res, next) {
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, '../dist/bcrs')))
 app.use('/', express.static(path.join(__dirname, '../dist/bcrs')))
 
 app.use('/api', userRoutes)
+app.use('/api', securityRoutes)
 
 // error handler for 404 errors
 app.use(function(req, res, next) {
