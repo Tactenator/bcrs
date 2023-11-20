@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { COOKIE_KEYS, SignInService } from './sign-in.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,30 +15,23 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit {
-  
-  signInform: FormGroup;
-  
-  errorMessage: string;
-  
 
-  signinForm = this.fb.group({
-    userId: [
-      null,
-      Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')]),
-    ],
-  });
+  signInForm: FormGroup;
+  hide = true;
+  errorMessage: string;
+
 
   constructor(
     private router: Router,
     private cookieService: CookieService,
     private fb: FormBuilder,
-    private signinService: SignInService
+    private signInService: SignInService
   ) {
     console.log(this.cookieService.get(COOKIE_KEYS.EMP_ID));
   }
 
   ngOnInit(): void {
-    this.signInform = this.fb.group({
+    this.signInForm = this.fb.group({
       userId: [
         '',
         Validators.compose([
@@ -48,16 +42,16 @@ export class SignInComponent implements OnInit {
     });
   }
   get form() {
-    return this.signinForm.controls;
+    return this.signInForm.controls;
   }
 
   onSubmit() {
-    const formValues = this.signinForm.value;
+    const formValues = this.signInForm.value;
     //this is how we capture the values of the form
 
     const userId = parseInt(formValues.userId);
 
-    this.signinService.signin(userId).subscribe({
+    this.signInService.signIn(userId).subscribe({
       next: (employee) => {
         this.router.navigate(['/tasks']);
       },

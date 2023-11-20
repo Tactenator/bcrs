@@ -14,7 +14,7 @@ export enum COOKIE_KEYS {
 export class SignInService {
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  signin(userId: number) {
+  signIn(userId: number) {
     return this.http.get('/api/users/' + userId).pipe(
       tap((user) => {
         this.cookieService.set(COOKIE_KEYS.EMP_ID, user['userId']);

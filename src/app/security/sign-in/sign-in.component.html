@@ -1,24 +1,47 @@
 <!--
   Title: sign-in.component.html
-  Author: Patrick Cuauro
+  Author: Patrick Cuauro, Tiffany Reyes
   Modified By: Patrick Cuauro
-  Date: 11/15/2023
+  Date: 11/20/2023
   Description: Sign In Component
 -->
 <!-- This could be done also with Angular Material -->
-<div class="sign-in-container">
+<mat-card>
+  <mat-card-title class="header">Sign In</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+      <div class="row justify-content-around">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="johnsmith13@example.com" required id="txtEmail" formControlName="email">
+        </mat-form-field>
+      </div>
+      <div class="row justify-content-around">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- <div class="sign-in-container">
     <form (submit)="onSubmit()" signInform="ngForm">
         <h1 class="sign-in-title">Account Sign-In</h1>
         <h2 class="sign-in-subtitle">Please type your employee ID to login</h2>
         <input required formControlName="userId" placeholder="Ex: 1007">
         <button [disabled]="! signInform.valid" class="login-login">Sign-In</button>
-    </form>
+    </form> -->
     <!-- <div class="msg-error" *ngIf="error">
         {{ error }}
       </div> -->
-    <div *ngIf="form['userId'].errors && form['userId'].dirty">
+    <!-- <div *ngIf="form['userId'].errors && form['userId'].dirty">
         <div class="msg-error">
             User ID must be a numeric value.
         </div>
     </div>
-</div>
+</div> -->
