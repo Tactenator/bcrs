@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
+import { adminGuard } from './guards/admin.guard';
+import { standardGuard } from './guards/standard.guard';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -39,6 +41,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canMatch: [adminGuard],
     children: [
       {
         path: 'profile',
@@ -49,6 +52,7 @@ const routes: Routes = [
   {
     path: '',
     component: InternalLayoutComponent,
+    canMatch: [standardGuard],
     children: [
       {
         path: 'profile',

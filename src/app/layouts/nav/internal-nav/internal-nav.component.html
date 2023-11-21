@@ -10,7 +10,7 @@
       <button mat-button routerLink="#">About</button>
       <button mat-button routerLink="#">Contact Us</button>
       <button mat-button routerLink="#">FAQs</button>
-      <button mat-button routerLink="/security/sign-in">Sign In<mat-icon>account_circle</mat-icon></button>
+      <button mat-button (click)="signOut()">Sign Out<mat-icon>account_circle</mat-icon></button>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
