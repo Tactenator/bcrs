@@ -13,7 +13,7 @@ import { User } from 'src/app/models/user';
 
 export enum COOKIE_KEYS {
   NAME = 'firstName',
-  EMP_ID = 'userId',
+  USER_ID = 'userId',
 }
 
 // this is to test sign-in functionality until backend is completed
@@ -41,7 +41,7 @@ export class SignInService {
     return of(testUser)
       .pipe(
         tap((user: User) => {
-          this.cookieService.set(COOKIE_KEYS.EMP_ID, user.userId);
+          this.cookieService.set(COOKIE_KEYS.USER_ID, user.userId);
           this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
           return user;
         })

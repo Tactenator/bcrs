@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
-import { NavComponent } from './layouts/nav/nav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +32,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
+import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
+import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.component';
+import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -40,9 +44,13 @@ import { ProfileComponent } from './profile/profile.component';
     AppComponent,
     HomeComponent,
     BaseLayoutComponent,
-    NavComponent,
     FooterComponent,
     ProfileComponent,
+    AdminLayoutComponent,
+    InternalLayoutComponent,
+    BaseNavComponent,
+    InternalNavComponent,
+    AdminNavComponent,
   ],
   imports: [
     BrowserModule,

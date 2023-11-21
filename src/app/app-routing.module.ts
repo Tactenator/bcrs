@@ -10,6 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -28,16 +30,32 @@ const routes: Routes = [
         title: 'BCRS: Home'
       },
       {
-        path: 'profile',
-        component: ProfileComponent,
-      },
-      {
         // path for the security module (e.g. login, register, forgot password, etc.)
         path: 'security',
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
       }
     ]
-  }
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      }
+    ]
+  },
+  {
+    path: '',
+    component: InternalLayoutComponent,
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      }
+    ]
+  },
 ];
 
 @NgModule({
