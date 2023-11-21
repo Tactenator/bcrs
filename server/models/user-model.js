@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const lineItemsSchema = new mongoose.Schema({
     "name": {
         type: String
-    }, 
+    },
     "price": {
         type: String
     }
@@ -20,25 +20,25 @@ const lineItemsSchema = new mongoose.Schema({
 const invoiceSchema = new mongoose.Schema({
     "email": {
         type: String
-    }, 
+    },
     "fullName": {
         type: String
-    }, 
+    },
     "lineItems": {
         type: [lineItemsSchema]
-    }, 
+    },
     "partsAmount": {
         type: String
-    }, 
+    },
     "laborAmount": {
         type: String
-    }, 
+    },
     "lineItemTotal": {
         type: String
-    }, 
+    },
     "invoiceTotal": {
         type: String
-    }, 
+    },
     "orderDate": {
         type: String
     }
@@ -47,7 +47,7 @@ const invoiceSchema = new mongoose.Schema({
 const securityQuestionsSchema = new mongoose.Schema({
     "questionText" : {
         type: String
-    }, 
+    },
     "answerText": {
         type: String
     }
@@ -65,32 +65,53 @@ const userSchema = new mongoose.Schema({
     },
     "firstName": {
         type: String
-    }, 
+    },
     "lastName": {
         type: String
-    }, 
+    },
     "phoneNumber": {
         type: String
-    }, 
+    },
     "address": {
         type: String
-    }, 
+    },
     "isDisabled": {
         type: Boolean
-    }, 
+    },
     "userId": {
         type: String
     },
     "role": {
         type: String
-    }, 
+    },
     "selectedSecurityQuestions": {
         type: [securityQuestionsSchema]
-    }, 
+    },
     "invoice": {
         type: [invoiceSchema]
     }
 });
+
+userSchema.statics.login = async function(email){
+  if(!email)
+  {
+      throw Error('All fields are required.')
+  }
+
+  const user = await this.findOne({ email })
+
+  if(!user){
+      throw Error('Incorrect Email');
+  }
+
+  // const match = await bcrypt.compare(password, user.password)
+
+  // if(!match){
+  //     throw Error('Incorrect password')
+  // }
+
+  return user;
+}
 
 //exports the schema
 module.exports = mongoose.model('User', userSchema);

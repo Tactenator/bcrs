@@ -8,22 +8,22 @@
  //imports
  const express = require('express');
  const User = require('../models/user-model');
-//  const bcrypt = require('bcryptjs');
 
 const router = express.Router();
-// const saltRounds = 10;
 
 //Signin Method
 router.post('/signin', async(req, res) => {
 
-  try {
-    const user = User.findOne({ 'email': req.body.email })
-    if(!user) {
-      res.status(500).json({'message': 'MongoDB Exception'})
+  const { email } = req.body;
+
+    try {
+        const user = await User.login( email );
+
+        res.status(200).json({ email })
     }
-  }
-  catch(error) {
-    console.log(error)
-    res.status(501).json({ 'message': `Server Exception: ${error.message}` })
-  }
+    catch (error){
+        res.status(400).json({error: error.message})
+    }
 });
+
+module.exports = router;
