@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { adminGuard } from './guards/admin.guard';
 import { standardGuard } from './guards/standard.guard';
 
@@ -35,7 +36,12 @@ const routes: Routes = [
         // path for the security module (e.g. login, register, forgot password, etc.)
         path: 'security',
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
-      }
+      },
+      {
+        path:'not-found',
+        component: NotFoundComponent,
+        title: 'BCRS: 404 Not Found'
+      },
     ]
   },
   {
@@ -59,6 +65,12 @@ const routes: Routes = [
         component: ProfileComponent,
       }
     ]
+  },
+
+  // this should catch any randomly wrong URL and redirect it to the 404 Page.
+  {
+    path: '**',
+    redirectTo: 'not-found'
   },
 ];
 
