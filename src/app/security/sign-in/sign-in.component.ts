@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder,
     private signInService: SignInService
   ) {
-    console.log(this.cookieService.get(COOKIE_KEYS.EMP_ID));
+    console.log(this.cookieService.get(COOKIE_KEYS.USER_ID));
   }
 
   ngOnInit(): void {
@@ -63,7 +63,7 @@ export class SignInComponent implements OnInit {
 
     this.signInService.signIn(formValues.email, formValues.password).subscribe({
       next: (employee) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['profile']);
       },
       error(err) {
         console.log(err);

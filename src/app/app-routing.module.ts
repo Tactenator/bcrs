@@ -9,7 +9,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
 import { HomeComponent } from './home/home.component';
-import { SignInComponent } from './security/sign-in/sign-in.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
+import { adminGuard } from './guards/admin.guard';
+import { standardGuard } from './guards/standard.guard';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -28,16 +32,34 @@ const routes: Routes = [
         title: 'BCRS: Home'
       },
       {
-        path: 'sign-in',
-        component: SignInComponent,
+        // path for the security module (e.g. login, register, forgot password, etc.)
+        path: 'security',
+        loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
       }
     ]
   },
   {
-    // path for the security module (e.g. login, register, forgot password, etc.)
-    path: 'security',
-    loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
-  }
+    path: '',
+    component: AdminLayoutComponent,
+    canMatch: [adminGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      }
+    ]
+  },
+  {
+    path: '',
+    component: InternalLayoutComponent,
+    canMatch: [standardGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      }
+    ]
+  },
 ];
 
 @NgModule({
