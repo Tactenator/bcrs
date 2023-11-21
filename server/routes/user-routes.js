@@ -221,6 +221,43 @@ router.put('/users/:userId', async (req, res) => {
         //throws an error if something goes wrong
         res.status(500).json({ error: error.message })
     }
-})
+});
+
+/**
+ * @openapi
+ * /:userId/{id}:
+ *   delete:
+ *     summary: Delete a user by ID for a specific user.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         description: User ID
+ *         required: true
+ *         schema:
+ *           type: number
+ *       - in: path
+ *         name: id
+ *         description: User ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully deleted the user.
+ *       400:
+ *         description: Bad request. Invalid input or missing parameters.
+ *       404:
+ *         description: User not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
+// Delete a user by id only if is needed, the requirement is to disable the user
+router.delete("/users/:id", async (req, res, next) => {
+    res.json(await User.deleteOne({ _id: req.params.id }));
+  });
+
 
 module.exports = router; 
