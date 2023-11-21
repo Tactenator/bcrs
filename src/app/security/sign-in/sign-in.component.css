@@ -5,3 +5,13 @@
   font-weight: bold;
   color: #B71C1C;
 }
+
+.redirect-links {
+  text-align: center;
+  padding: 1em;
+}
+
+a {
+  color: #FFB300;
+  text-decoration: underline;
+}

@@ -1,0 +1,13 @@
+footer {
+  background-color: #B71C1C;
+  height: 150px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  padding: 2em;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

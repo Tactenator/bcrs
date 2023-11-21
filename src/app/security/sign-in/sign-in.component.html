@@ -1,7 +1,7 @@
 <!--
   Title: sign-in.component.html
   Author: Patrick Cuauro, Tiffany Reyes
-  Modified By: Patrick Cuauro
+  Modified By: Patrick Cuauro, Tiffany Reyes
   Date: 11/20/2023
   Description: Sign In Component
 -->
@@ -31,27 +31,13 @@
           </mat-error>
         </mat-form-field>
       </div>
-
       <div class="row justify-content-around">
         <button mat-raised-button class="col-12 col-md-4" color="primary" type="submit" [disabled]="!signInForm.valid">Submit</button>
       </div>
     </form>
+    <div class="redirect-links">
+      <a href="#" class="row justify-content-around">Forgot Password</a>
+      <a href="#" class="row justify-content-around">Don't have an account? Register here</a>
+    </div>
   </mat-card-content>
 </mat-card>
-
-<!-- <div class="sign-in-container">
-    <form (submit)="onSubmit()" signInform="ngForm">
-        <h1 class="sign-in-title">Account Sign-In</h1>
-        <h2 class="sign-in-subtitle">Please type your employee ID to login</h2>
-        <input required formControlName="userId" placeholder="Ex: 1007">
-        <button [disabled]="! signInform.valid" class="login-login">Sign-In</button>
-    </form> -->
-    <!-- <div class="msg-error" *ngIf="error">
-        {{ error }}
-      </div> -->
-    <!-- <div *ngIf="form['userId'].errors && form['userId'].dirty">
-        <div class="msg-error">
-            User ID must be a numeric value.
-        </div>
-    </div>
-</div> -->

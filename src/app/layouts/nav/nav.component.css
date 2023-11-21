@@ -1,31 +1,5 @@
-nav{
-  font-family: 'Exo', sans-serif;
-}
-.nav-fill{
-  background-color: red;
-  padding-top: 1%;
-}
-.nav-title{
-  font-size: xx-large;
-  font-weight: 100;
-  color: red;
-  text-decoration: none;
-}
-.nav-logo{
-  text-decoration: none;
-  color: gold;
-  font-size: 40pt;
-
-}
-.spacer {
+.toolbar-spacer {
   flex: 1 1 auto;
 }
-.nav-button{
-  color: red;
-  text-decoration: none;
-  margin-left: 2%;
-}
-.nav-button:hover{
-  text-decoration: underline;
-  color: rgb(74, 64, 64);
-}
+
+
