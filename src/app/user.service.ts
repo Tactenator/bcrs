@@ -5,19 +5,19 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { response } from 'express';
 import { str } from 'ajv';
-
-import { UserModel } from './user.model';
 import * as e from 'express';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private users: UserModel[] = [];
-  private usersUpdated = new Subject<UserModel[]>();
+  private users: User[] = [];
+  private usersUpdated = new Subject<User[]>();
   //passing a payload of type UserModel[]
 
   constructor(private http: HttpClient) {}
+
   getUsers() {
     this.http
       .get<{ message: string; users: any }>(
@@ -45,14 +45,15 @@ export class UserService {
     return this.usersUpdated.asObservable();
     //return an observable
   }
+
   addUser(userId: string, firstName: string, lastName: string) {
-    const user: UserModel = {
+    const user: User = {
         userId: userId,
         firstName: firstName,
         lastName: lastName,
         email: '',
         password: '',
-        username: '',
+        phoneNumber: '',
         address: '',
         isDisabled: false,
         role: ''
@@ -84,6 +85,7 @@ export class UserService {
         this.usersUpdated.next([...this.users]);
       });
   }
+
   retrieveTasks() {
     // doneTasks: user.doneTasks
     throw new Error('Method not implemented.');
