@@ -18,6 +18,9 @@ router.post('/signin', async(req, res) => {
 
   try {
     const user = User.findOne({ 'email': req.body.email })
+    if(!user) {
+      res.status(500).json({'message': 'MongoDB Exception'})
+    }
   }
   catch(error) {
     console.log(error)
