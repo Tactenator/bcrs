@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { AddUserRequest } from '../models/add-user';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +28,11 @@ export class UserService {
       );
   }
 
-  // does not call backend
-  getUser(userId: string): User {
-    return this.users.find(user => user._id === userId);
+  getUser(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.userApiUrl}/${userId}`);
   }
 
-  addUser(user: User): Observable<User> {
+  addUser(user: AddUserRequest): Observable<User> {
     return this.http.post<User>(this.userApiUrl, user)
       .pipe(
         tap(user => {
@@ -60,19 +60,6 @@ export class UserService {
   }
 
   deleteUser(user: User): Observable<User> {
-    return this.http.delete<User>(`${this.userApiUrl}/${user._id}`)
-      .pipe(
-        tap(() => {
-          this.users = this.users.map(user => {
-            if (user._id === user._id) {
-              user = {...user, isDisabled: true};
-            }
-
-            return user;
-          });
-
-          this._users.next(this.users);
-        })
-      );
+    return this.http.delete<User>(`${this.userApiUrl}/${user._id}`);
   }
 }

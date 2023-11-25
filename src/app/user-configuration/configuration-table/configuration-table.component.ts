@@ -31,6 +31,12 @@ export class ConfigurationTableComponent implements OnInit {
       data: { user },
       width: '500px'
     });
+
+    this.deleteDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        location.reload();
+      }
+    });
   }
 
   editUser(userId: string) { // editing user

@@ -27,15 +27,26 @@ const router = express.Router();
  *         application/json:
  *           schema:
  *             required:
- *               - name
- *               - position
- *               - empId
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - password
  *             properties:
  *               firstName:
  *                 type: string
  *               lastName:
  *                 type: string
- *               empId:
+ *               email:
+ *                 type: String
+ *               password:
+ *                 type: String
+ *               phoneNumber:
+ *                 type: string
+ *               address:
+ *                 type: String
+ *               userId:
+ *                 type: String
+ *               role:
  *                 type: String
  *     responses:
  *       '201':
@@ -48,11 +59,11 @@ const router = express.Router();
 router.post('/users', async (req,res) => {
     //Grabs information from the req.body function to initialize variables.
     console.log(req.body)
-    const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role  } = req.body;
+    const { email, password, firstName, lastName, phoneNumber, address, userId, role  } = req.body;
 
     try{
         //creates a new customer. Checks to see if all parameters are met
-        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role })
+        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled: false, userId, role })
         if(!newUser){
             //if all parameters are not met, throws an error
             res.status(500).send( { 'message': `MongoDB Exception 501`})

@@ -6,52 +6,66 @@
  */
 
 // importing class elements
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { User } from 'src/app/models/user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })
-export class UserEditComponent {
+export class UserEditComponent implements OnInit {
+  user$: Observable<User>;
   user: User;
   updateUserForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getUser(this.route.snapshot.paramMap.get('userId'));
-    this.updateUserForm = this.fb.group({
-      firstName: [this.user.firstName],
-      lastName: [this.user.lastName],
-      email: [this.user.email],
-      address: [this.user.address],
-      phone: [this.user.phoneNumber],
-    });
+    this.user$ = this.userService.getUser(this.route.snapshot.paramMap.get('userId'));
+
+    this.user$.subscribe(user => {
+      this.user = user;
+
+      this.updateUserForm = this.fb.group({
+        firstName: [user.firstName],
+        lastName: [user.lastName],
+        email: [user.email],
+        address: [user.address],
+        phone: [user.phoneNumber],
+      });
+    })
+
   }
 
-  updateTask() {
-    // const employeeId = this.cookieService.get('empId');
-    // const formValues = this.updateTaskForm.value;
+  updateUser() {
+    const formValues = this.updateUserForm.value;
 
-    // const task: Task = {
-    //   taskId: this.data.task.taskId,
-    //   employeeId: this.data.task.employeeId,
-    //   description: formValues.description,
-    //   status: this.data.task.status
-    // };
+    const updatedUser: User = {
+      _id: this.user._id,
+      userId: this.user.userId,
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      address: formValues.address,
+      phoneNumber: formValues.phone,
+      password: this.user.password,
+      isDisabled: this.user.isDisabled,
+      role: this.user.role,
+    };
 
-    // this.employeesService.updateTaskByEmployeeId(employeeId, task)
-    //   .subscribe(() => {
-    //     this.dialogRef.close(task);
-    //   });
+    this.userService.editUser(updatedUser)
+      .subscribe(() => {
+        this.router.navigate(['user-management']);
+      });
   }
 }
