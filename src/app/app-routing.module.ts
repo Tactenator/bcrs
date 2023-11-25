@@ -10,8 +10,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { adminGuard } from './guards/admin.guard';
 import { standardGuard } from './guards/standard.guard';
@@ -41,44 +39,29 @@ const routes: Routes = [
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
       },
       {
-        path:'not-found',
-        component: NotFoundComponent,
-        title: 'BCRS: 404 Not Found'
-      },
-    ]
-  },
-  {
-    path: '',
-    component: AdminLayoutComponent,
-    canMatch: [adminGuard],
-    children: [
-      {
         path: 'profile',
         component: ProfileComponent,
       },
       {
         path: 'user-management',
         component: UserConfigurationComponent,
+        canMatch: [adminGuard],
       },
       {
         path: 'user-management/create',
         component: UserCreateComponent,
+        canMatch: [adminGuard],
       },
       {
         path: 'user-management/:userId',
         component: UserEditComponent,
-      }
-    ]
-  },
-  {
-    path: '',
-    component: InternalLayoutComponent,
-    canMatch: [standardGuard],
-    children: [
+        canMatch: [adminGuard],
+      },
       {
-        path: 'profile',
-        component: ProfileComponent,
-      }
+        path:'not-found',
+        component: NotFoundComponent,
+        title: 'BCRS: 404 Not Found'
+      },
     ]
   },
 

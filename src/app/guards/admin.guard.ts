@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { COOKIE_KEYS } from '../security/sign-in/sign-in.service';
+import { COOKIE_KEYS } from '../constants/cookie-keys';
 
 export const adminGuard: CanActivateFn = (route, state) => {
   const cookieService = inject(CookieService);

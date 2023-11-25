@@ -33,11 +33,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
 import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
-import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.component';
-import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
 import { ConfigurationTableComponent } from './user-configuration/configuration-table/configuration-table.component';
@@ -53,11 +49,7 @@ import { UserCreateComponent } from './user-configuration/user-create/user-creat
     BaseLayoutComponent,
     FooterComponent,
     ProfileComponent,
-    AdminLayoutComponent,
-    InternalLayoutComponent,
     BaseNavComponent,
-    InternalNavComponent,
-    AdminNavComponent,
     NotFoundComponent,
     UserConfigurationComponent,
     ConfigurationTableComponent,
