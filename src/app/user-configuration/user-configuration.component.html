@@ -3,11 +3,9 @@
   <mat-card-content>
     <div class="row col-12 col-6">
       <ng-container *ngIf="users$ | async as users">
-        <ul>
-          <li *ngFor="let user of users">
-            {{user.firstName}}
-          </li>
-        </ul>
+        <ng-container *ngIf="users.length > 0">
+          <app-configuration-table [users]="users"></app-configuration-table>
+        </ng-container>
       </ng-container>
     </div>
   </mat-card-content>

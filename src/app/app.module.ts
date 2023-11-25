@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,6 +40,7 @@ import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.co
 import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
+import { ConfigurationTableComponent } from './user-configuration/configuration-table/configuration-table.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -55,6 +57,7 @@ import { UserConfigurationComponent } from './user-configuration/user-configurat
     AdminNavComponent,
     NotFoundComponent,
     UserConfigurationComponent,
+    ConfigurationTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { UserConfigurationComponent } from './user-configuration/user-configurat
     MatInputModule,
     MatMenuModule,
     MatSidenavModule,
+    MatTableModule,
     MatToolbarModule,
     MatListModule,
     MatCheckboxModule,
