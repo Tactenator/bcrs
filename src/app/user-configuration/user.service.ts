@@ -1,24 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // this is the http client module that we need to retrieve data from the server
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { response } from 'express';
-import { str } from 'ajv';
-import * as e from 'express';
-import { User } from './models/user';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private _users = new BehaviorSubject<User[]>([]);
+  users$: Observable<User[]> = this._users.asObservable();
+
   private users: User[] = [];
   private usersUpdated = new Subject<User[]>();
   //passing a payload of type UserModel[]
 
   constructor(private http: HttpClient) {}
 
-  getUsers() {
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:3000/api/users')
+      .pipe(
+        tap(users => {
+          this._users.next(users);
+        })
+      );
+  }
+
+  getUsers2() {
     this.http
       .get<{ message: string; users: any }>(
         // this the method necessary to retrieve data from the server

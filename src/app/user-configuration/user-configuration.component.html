@@ -1,0 +1,14 @@
+<mat-card>
+  <h1 color="primary">User Management</h1>
+  <mat-card-content>
+    <div class="row col-12 col-6">
+      <ng-container *ngIf="users$ | async as users">
+        <ul>
+          <li *ngFor="let user of users">
+            {{user.firstName}}
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

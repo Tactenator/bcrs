@@ -38,6 +38,7 @@ import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
 import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.component';
 import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -53,6 +54,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     InternalNavComponent,
     AdminNavComponent,
     NotFoundComponent,
+    UserConfigurationComponent,
   ],
   imports: [
     BrowserModule,
