@@ -98,13 +98,19 @@ router.get('/users', async (req,res) => {
 /**
  * findUserById
  * @openapi
- * /api/users/{id}:
+ * /api/users/{userId}:
  *   get:
  *     tags:
  *       - Users
  *     description: Returns a specific user designated by the user input. The user is retrieved by grabbing an id from the url parameters.
  *     summary: Returns the data for a specific user.
- *     operationid: findUserById
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: Id of the user to update.
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: "Successful retrieval of a document containing the user"
@@ -119,7 +125,7 @@ router.get('/users', async (req,res) => {
 router.get('/users/:userId', async (req, res) => {
 
     //searches for user based on the id variable.
-    const user = await User.findOne({ 'userId': req.params.userId })
+    const user = await User.findById(req.params.userId)
 
     if(!user)
     {

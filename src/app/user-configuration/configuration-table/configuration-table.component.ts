@@ -17,7 +17,10 @@ export class ConfigurationTableComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
   deleteDialogRef: MatDialogRef<UserDeleteDialogComponent>;
 
-  constructor(public dialog: MatDialog, private router: Router) {}
+  constructor(
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.users);

@@ -21,9 +21,8 @@ export class UserDeleteDialogComponent {
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<UserDeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
-      console.log(this.data.user._id);
-    }
+    @Inject(MAT_DIALOG_DATA) public data: { user: User }
+  ) {}
 
   deleteUser() {
     this.userService.deleteUser(this.data.user)

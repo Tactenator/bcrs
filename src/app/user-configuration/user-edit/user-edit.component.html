@@ -1,1 +1,15 @@
-<p>user-edit works!</p>
+<mat-card>
+  <h1 color="primary">Edit User</h1>
+  <mat-card-content>
+    <div class="row col-12 col-6">
+      <form [formGroup]="updateUserForm">
+        <div class="row">
+          <mat-form-field class="col-12">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

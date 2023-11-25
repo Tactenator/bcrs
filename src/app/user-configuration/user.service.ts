@@ -27,6 +27,11 @@ export class UserService {
       );
   }
 
+  // does not call backend
+  getUser(userId: string): User {
+    return this.users.find(user => user._id === userId);
+  }
+
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.userApiUrl, user)
       .pipe(
