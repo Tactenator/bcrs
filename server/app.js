@@ -11,6 +11,8 @@ const createServer = require('http-errors')
 const path = require('path')
 const morgan = require('morgan');
 const cors = require('cors')
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 // Create the Express app
 const app = express()
@@ -21,6 +23,18 @@ app.use(morgan('dev'));
 const userRoutes = require('./routes/user-routes')
 const securityRoutes = require('./routes/signin-route')
 
+const options = {
+  definition: {
+      openapi: '3.0.0',
+      info: {
+          title: 'BCRS API',
+          version: '1.0.0'
+      },
+  },
+  apis: ['server/routes/*.js']
+}
+
+const openapiSpecification = swaggerJsdoc(options);
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,6 +50,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '../dist/bcrs')))
 app.use('/', express.static(path.join(__dirname, '../dist/bcrs')))
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api', userRoutes)
 app.use('/api', securityRoutes)
 
