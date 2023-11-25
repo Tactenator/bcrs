@@ -193,7 +193,7 @@ router.get('/users/:userId', async (req, res) => {
 router.put('/users/:userId', async (req, res) => {
     try{
         //Searches for user from the user database
-        const user = await User.findOne({ 'userId': req.params.userId })
+        const user = await User.findById(req.params.userId );
         //if no user exists, throws an error
         if(!user){
             res.status(401).json({ error: 'Invalid user Id'})
@@ -208,7 +208,7 @@ router.put('/users/:userId', async (req, res) => {
                 phoneNumber: req.body.phoneNumber,
                 address: req.body.address,
                 isDisabled: req.body.isDisabled,
-                userId: req.body.userId ,
+                userId: req.body.userId,
                 role: req.body.role
             })
 
