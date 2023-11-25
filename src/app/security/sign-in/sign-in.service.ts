@@ -17,33 +17,6 @@ export enum COOKIE_KEYS {
   ROLE = 'role',
 }
 
-// test sign-in functionality until backend is completed
-// use this to test admin sign in
-const testAdminUser: User = {
-  userId: '1',
-  firstName: 'john',
-  lastName: 'smith',
-  email: 'mozart@nodebucket.com',
-  password: 'Password01',
-  phoneNumber: '',
-  address: '',
-  isDisabled: false,
-  role: 'admin'
-};
-
-// use this to test standard sign in
-const testStandardUser: User = {
-  userId: '1',
-  firstName: 'john',
-  lastName: 'smith',
-  email: 'mozart@nodebucket.com',
-  password: 'Password01',
-  phoneNumber: '',
-  address: '',
-  isDisabled: false,
-  role: 'standard'
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -52,8 +25,7 @@ export class SignInService {
 
   // mocking backend response to test user sign-in
   signIn(email: string, password: string) {
-    // return this.http.post<User>('/api/signin/', { email, password })
-    return of(testAdminUser) // INSERT USER TO TEST HERE, use above statement when ready to integrate api
+    return this.http.post<User>('/api/signin/', { email, password })
       .pipe(
         tap((user: User) => {
           this.cookieService.set(COOKIE_KEYS.USER_ID, user.userId);
