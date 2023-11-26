@@ -1,5 +1,3 @@
-import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 /**
  * Title: app-routing.module.ts
  * Author: Professor Krasso
@@ -62,34 +60,14 @@ const routes: Routes = [
         canMatch: [adminGuard],
       },
       {
-        path:'not-found',
+        path: 'not-found',
         component: NotFoundComponent,
         title: 'BCRS: 404 Not Found',
       },
     ],
   },
-  {
-    path: '',
-    component: AdminLayoutComponent,
-    canMatch: [adminGuard],
-    children: [
-      {
-        path: 'profile',
-        component: ProfileComponent,
-      },
-    ],
-  },
-  {
-    path: '',
-    component: InternalLayoutComponent,
-    canMatch: [standardGuard],
-    children: [
-      {
-        path: 'profile',
-        component: ProfileComponent,
-      },
-    ],
-  },
+ 
+ 
 
   // this should catch any randomly wrong URL and redirect it to the 404 Page.
   {
