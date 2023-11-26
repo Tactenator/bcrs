@@ -1,3 +1,4 @@
+import { User } from './models/user';
 /**
  * Title: app.module.ts
  * Author: Professor Krasso
@@ -38,6 +39,12 @@ import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
 import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.component';
 import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ServiceTableComponent } from './service-management/service-table/service-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { UserTableComponent } from './user-management/user-table/user-table.component';
+import { UserTableService } from './user-management/user-table.service';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -53,6 +60,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     InternalNavComponent,
     AdminNavComponent,
     NotFoundComponent,
+    ServiceTableComponent,
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,9 +82,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatCheckboxModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [UserTableService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

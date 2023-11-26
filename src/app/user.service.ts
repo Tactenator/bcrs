@@ -26,13 +26,15 @@ export class UserService {
       )
       .pipe(
         map((userData) => {
-          return userData.users.map((user: { userId: any; firstName: any; lastName: any; }) => {
-            return {
-              userId: user.userId,
-              firstName: user.firstName,
-              lastName: user.lastName,
-            };
-          });
+          return userData.users.map(
+            (user: { userId: any; firstName: any; lastName: any }) => {
+              return {
+                userId: user.userId,
+                firstName: user.firstName,
+                lastName: user.lastName,
+              };
+            }
+          );
         })
       )
       .subscribe((transformedUsers) => {
@@ -48,15 +50,15 @@ export class UserService {
 
   addUser(userId: string, firstName: string, lastName: string) {
     const user: User = {
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        email: '',
-        password: '',
-        phoneNumber: '',
-        address: '',
-        isDisabled: false,
-        role: ''
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: '',
+      password: '',
+      phoneNumber: '',
+      address: '',
+      isDisabled: false,
+      role: '',
     };
     this.http
       .post<{ message: string; userId: string }>(
