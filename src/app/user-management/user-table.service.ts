@@ -18,7 +18,7 @@ export class UserTableService {
 
   constructor(private http: HttpClient) {}
 
-  findUsers(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/users');
+  findUsers(){
+    return this.http.get<User[]>('http://localhost:3000/api/users');
   }
 }

@@ -1,6 +1,6 @@
 <mat-card>
   <div class="mat-elevation-z8 user-settings">
-    <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
       <!-- User Id Column -->
       <ng-container matColumnDef="userId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -27,8 +27,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]" aria-label="Select page">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </mat-card>
