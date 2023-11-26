@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { COOKIE_KEYS } from '../security/sign-in/sign-in.service';
+import { COOKIE_KEYS } from '../constants/cookie-keys';
 
 @Component({
   selector: 'app-profile',

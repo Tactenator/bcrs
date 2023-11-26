@@ -7,12 +7,13 @@
 
 // importing class elements
 import { Component, OnInit } from '@angular/core';
-import { COOKIE_KEYS, SignInService } from './sign-in.service';
+import { SignInService } from './sign-in.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
+import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
 
 // import { get } from 'mongoose';
 

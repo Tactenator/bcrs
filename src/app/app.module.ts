@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,18 +34,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { InternalLayoutComponent } from './layouts/internal-layout/internal-layout.component';
 import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
-import { InternalNavComponent } from './layouts/nav/internal-nav/internal-nav.component';
-import { AdminNavComponent } from './layouts/nav/admin-nav/admin-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServiceTableComponent } from './service-management/service-table/service-table.component';
-import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { UserTableComponent } from './user-management/user-table/user-table.component';
 import { UserTableService } from './user-management/user-table.service';
+import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
+import { ConfigurationTableComponent } from './user-configuration/configuration-table/configuration-table.component';
+import { UserDeleteDialogComponent } from './user-configuration/user-delete-dialog/user-delete-dialog.component';
+import { UserEditComponent } from './user-configuration/user-edit/user-edit.component';
+import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -54,14 +55,15 @@ import { UserTableService } from './user-management/user-table.service';
     BaseLayoutComponent,
     FooterComponent,
     ProfileComponent,
-    AdminLayoutComponent,
-    InternalLayoutComponent,
     BaseNavComponent,
-    InternalNavComponent,
-    AdminNavComponent,
     NotFoundComponent,
     ServiceTableComponent,
     UserTableComponent,
+    UserConfigurationComponent,
+    ConfigurationTableComponent,
+    UserDeleteDialogComponent,
+    UserEditComponent,
+    UserCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,7 @@ import { UserTableService } from './user-management/user-table.service';
     MatInputModule,
     MatMenuModule,
     MatSidenavModule,
+    MatTableModule,
     MatToolbarModule,
     MatListModule,
     MatCheckboxModule,

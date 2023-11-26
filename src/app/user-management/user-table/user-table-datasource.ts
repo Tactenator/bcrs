@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { UserService } from 'src/app/user.service';
 //service created to retrieve data from the server (see user.service.ts)
 //new service created to retrieve data from the server
 

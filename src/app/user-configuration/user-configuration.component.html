@@ -1,0 +1,15 @@
+<mat-card>
+  <h1 color="primary">User Management</h1>
+  <mat-card-content>
+    <div class="row mb-3">
+      <button mat-raised-button color="accent" class="col-12 col-lg-2" routerLink="/user-management/create">Create User</button>
+    </div>
+    <div class="row col-12 col-6">
+      <ng-container *ngIf="users$ | async as users">
+        <ng-container *ngIf="users.length > 0">
+          <app-configuration-table [users]="users"></app-configuration-table>
+        </ng-container>
+      </ng-container>
+    </div>
+  </mat-card-content>
+</mat-card>

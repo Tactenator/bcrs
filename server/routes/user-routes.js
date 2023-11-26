@@ -3,7 +3,7 @@
     Title: user-routes.js,
     Author: Trevor McLaurine
     Date: 11/15/2023
-    Description: User Routes 
+    Description: User Routes
 */
 
 const express = require('express')
@@ -20,26 +20,37 @@ const router = express.Router();
  *     tags:
  *       - Users
  *     name: createUsers
- *     summary: Creates a new user for the User API
+ *     summary: Creates a new user for the BCRS API
  *     requestBody:
  *       description: Information about the user
  *       content:
  *         application/json:
  *           schema:
  *             required:
- *               - name
- *               - position
- *               - empId
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - password
  *             properties:
  *               firstName:
  *                 type: string
  *               lastName:
  *                 type: string
- *               empId:
+ *               email:
+ *                 type: String
+ *               password:
+ *                 type: String
+ *               phoneNumber:
+ *                 type: string
+ *               address:
+ *                 type: String
+ *               userId:
+ *                 type: String
+ *               role:
  *                 type: String
  *     responses:
- *       '200':
- *         description: Customer added to NodeShopper API
+ *       '201':
+ *         description: Successful creation of a user
  *       '500':
  *         description: Server Exception
  *       '501':
@@ -48,18 +59,18 @@ const router = express.Router();
 router.post('/users', async (req,res) => {
     //Grabs information from the req.body function to initialize variables.
     console.log(req.body)
-    const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role  } = req.body; 
+    const { email, password, firstName, lastName, phoneNumber, address, userId, role  } = req.body;
 
     try{
         //creates a new customer. Checks to see if all parameters are met
-        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role })
+        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled: false, userId, role })
         if(!newUser){
             //if all parameters are not met, throws an error
             res.status(500).send( { 'message': `MongoDB Exception 501`})
         }
         else {
             //if successful, creates a new customer
-            res.status(200).json(newUser);
+            res.status(201).json(newUser);
         }
     }
     catch (error) {
@@ -75,12 +86,12 @@ router.post('/users', async (req,res) => {
  *   get:
  *     tags:
  *       - Users
- *     description: Returns a list of all users from the Users API database
+ *     description: Returns a list of all users from the BCRS API database
  *     summary: Returns the data for all of the users
  *     operationid: findAllUsers
  *     responses:
  *       '200':
- *         description: "Successful retrieval of documents from the Users API"
+ *         description: "Successful retrieval of documents from the BCRS API"
  *       '500':
  *         description: "Server exceptions"
  *       '501':
@@ -98,13 +109,19 @@ router.get('/users', async (req,res) => {
 /**
  * findUserById
  * @openapi
- * /api/users/{id}:
+ * /api/users/{userId}:
  *   get:
  *     tags:
  *       - Users
  *     description: Returns a specific user designated by the user input. The user is retrieved by grabbing an id from the url parameters.
  *     summary: Returns the data for a specific user.
- *     operationid: findUserById
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: Id of the user to update.
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: "Successful retrieval of a document containing the user"
@@ -119,7 +136,7 @@ router.get('/users', async (req,res) => {
 router.get('/users/:userId', async (req, res) => {
 
     //searches for user based on the id variable.
-    const user = await User.findOne({ 'userId': req.params.userId })
+    const user = await User.findById(req.params.userId)
 
     if(!user)
     {
@@ -144,8 +161,8 @@ router.get('/users/:userId', async (req, res) => {
  *       - name: userId
  *         in: path
  *         required: true
- *         description: Id of the user to update. 
- *         schema: 
+ *         description: Id of the user to update.
+ *         schema:
  *           type: string
  *     requestBody:
  *       description: Employee information
@@ -160,7 +177,7 @@ router.get('/users/:userId', async (req, res) => {
  *               - phoneNumber
  *               - address
  *               - isDisabled
- *               - userId 
+ *               - userId
  *               - role
  *             properties:
  *               email:
@@ -171,7 +188,7 @@ router.get('/users/:userId', async (req, res) => {
  *                 type: string
  *               password:
  *                 type: string
- *               phoneNumber: 
+ *               phoneNumber:
  *                 type: string
  *               address:
  *                 type: string
@@ -179,10 +196,10 @@ router.get('/users/:userId', async (req, res) => {
  *                 type: string
  *               userId:
  *                 type: string
- *               role: 
+ *               role:
  *                 type: string
  *     responses:
- *       '200':
+ *       '204':
  *         description: User updated
  *       '500':
  *         description: Server Exception
@@ -193,22 +210,22 @@ router.get('/users/:userId', async (req, res) => {
 router.put('/users/:userId', async (req, res) => {
     try{
         //Searches for user from the user database
-        const user = await User.findOne({ 'userId': req.params.userId })
+        const user = await User.findById(req.params.userId );
         //if no user exists, throws an error
         if(!user){
             res.status(401).json({ error: 'Invalid user Id'})
         }
         else {
             //otherwise, sets the new user data
-            user.set({ 
-                email: req.body.email, 
+            user.set({
+                email: req.body.email,
                 firstName: req.body.firstName,
-                lastName: req.body.lastName, 
-                password: req.body.password, 
-                phoneNumber: req.body.phoneNumber, 
-                address: req.body.address, 
-                isDisabled: req.body.isDisabled, 
-                userId: req.body.userId ,
+                lastName: req.body.lastName,
+                password: req.body.password,
+                phoneNumber: req.body.phoneNumber,
+                address: req.body.address,
+                isDisabled: req.body.isDisabled,
+                userId: req.body.userId,
                 role: req.body.role
             })
 
@@ -224,8 +241,9 @@ router.put('/users/:userId', async (req, res) => {
 });
 
 /**
+ * deleteUser
  * @openapi
- * /:userId/{id}:
+ * /api/users/{userId}:
  *   delete:
  *     summary: Delete a user by ID for a specific user.
  *     tags:
@@ -236,15 +254,9 @@ router.put('/users/:userId', async (req, res) => {
  *         description: User ID
  *         required: true
  *         schema:
- *           type: number
- *       - in: path
- *         name: id
- *         description: User ID
- *         required: true
- *         schema:
  *           type: string
  *     responses:
- *       200:
+ *       204:
  *         description: Successfully deleted the user.
  *       400:
  *         description: Bad request. Invalid input or missing parameters.
@@ -255,9 +267,29 @@ router.put('/users/:userId', async (req, res) => {
  */
 
 // Delete a user by id only if is needed, the requirement is to disable the user
-router.delete("/users/:id", async (req, res, next) => {
-    res.json(await User.deleteOne({ _id: req.params.id }));
-  });
+router.delete("/users/:userId", async (req, res, next) => {
+  try{
+    //Searches for user from the user database
+    const user = await User.findById(req.params.userId)
+    //if no user exists, throws an error
+    if(!user){
+      res.status(404).json({ error: 'Not Found.'})
+    }
+    else {
+        //otherwise, sets the new user data
+        user.set({
+          isDisabled: true,
+        })
 
+        //saves the new user data to the database
+        user.save()
+        res.status(204).json()
+    }
+  }
+  catch (error) {
+      //throws an error if something goes wrong
+      res.status(500).json({ error: error.message })
+  }
+});
 
-module.exports = router; 
+module.exports = router;
