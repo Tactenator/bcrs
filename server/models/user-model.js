@@ -45,11 +45,14 @@ const invoiceSchema = new mongoose.Schema({
 })
 
 const securityQuestionsSchema = new mongoose.Schema({
-    "questionText" : {
+    "question" : {
         type: String
     },
-    "answerText": {
+    "answer": {
         type: String
+    }, 
+    "questionId": {
+        type: String 
     }
 })
 

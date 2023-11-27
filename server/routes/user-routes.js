@@ -292,4 +292,37 @@ router.delete("/users/:userId", async (req, res, next) => {
   }
 });
 
+//temporary route to add a security question
+router.post('/users/:email/security-questions', async (req, res) => {
+
+    try{
+        // searches for a user based on the parameters written by the user
+        console.log(req.body)
+        const user = await User.findOne({ 'email': req.params.email })
+        if(!user){
+            // if no user is found, throws an error
+            res.status(501).send({ 'message': 'MongoDB Exception'})
+        }
+        else
+        {
+            //if a user is found, a new invoice object is created and initialized with the req.body values
+            const newQuestion = {
+                question: req.body.question, 
+                answer: req.body.answer,
+                questionId: req.body.questionId
+            }   
+            
+            user.selectedSecurityQuestions.push(newQuestion)
+            
+            //saves the new data to the database
+            user.save()
+            res.status(200).json(user)
+        }
+    }
+    catch (error) {
+        //if unsuccessful, throws an error
+        res.status(500).send({ 'message': `Server Exception: ${error.message} `})
+    }
+})
+
 module.exports = router;
