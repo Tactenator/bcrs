@@ -8,8 +8,8 @@
  //imports
  const express = require('express');
  const User = require('../models/user-model');
-
-const router = express.Router();
+ const bcrypt = require('bcryptjs');
+ const router = express.Router();
 
 //Signin Method
 /**
@@ -65,28 +65,34 @@ router.post('/signin', async(req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-
+  
+try {
   const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role } = req.body; 
 
-  if(!username || !firstName || !lastName || !email || !password || phoneNumber || address || isDisabled || userId || role)
+  if(!email || !password || !firstName || !lastName || !phoneNumber || !address || !userId || !role)
   {
-      throw Error('All fields are required.')
+      return res.status(401).json({ error: 'All fields required'})
   }
 
-  const exists = await this.findOne({ email })
+  const exists = await User.findOne({ email })
 
   if(exists)
   {
-      throw Error('Email already in use.'); 
+    return res.status(500).json({ error: 'Email already exists'}) 
   }
 
   // mypassword
   const salt = await bcrypt.genSalt(10); 
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({username, firstName, lastName, email, password: hash })
+  const user = await User.create({email, password: hash, firstName, lastName, phoneNumber, address, isDisabled, userId, role })
 
-  return user; 
+  res.status(200).json(user)
+}
+catch(error) {
+  res.status(400).json({ error: `${error.message}`})
+}
+   
 
 });
 
