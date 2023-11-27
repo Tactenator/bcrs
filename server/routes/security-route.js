@@ -154,7 +154,7 @@ catch(error) {
 /**
  * VeryifySecurityQuestions
  * @openapi
- * /api/security/verify/users/:email/security-questions:
+ * /api/security/verify/users/{email}/security-questions:
  *   post:
  *     tags:
  *       - Security
@@ -204,6 +204,30 @@ router.post('/security/verify/users/:email/security-questions', async (req, res)
 
     //return 500 status if incorrect
     return res.status(500).json("Incorrect answer given. ")
+  }
+  catch(error) {
+    res.status(400).json({ error: `${error.message}`})
+  }
+})
+
+router.post('/security/users/:email/reset-password', async (req, res) => {
+  try {
+    const user = await User.findOne({ 'email': req.params.email })
+
+    //throw error if no email
+    if(!user) { 
+      return res.status(500).json(' User not found or does not exist. ')
+    }
+
+    const newPassword = req.body.password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newPassword, salt)
+
+    user.set({
+      password: hash
+    })
+
+    return res.status(200).json(user)
   }
   catch(error) {
     res.status(400).json({ error: `${error.message}`})
