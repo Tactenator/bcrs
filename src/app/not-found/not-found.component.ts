@@ -1,3 +1,9 @@
+/**
+ * Title: not-found.component.ts
+ * Author: William Austin
+ * Date: 11/20/2023
+ * Description: Not Found component
+ */
 import { Component } from '@angular/core';
 
 @Component({
