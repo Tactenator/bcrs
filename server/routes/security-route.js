@@ -47,12 +47,14 @@ router.post('/signin', async(req, res) => {
   const { email, password } = req.body;
 
     try {
-        const user = await User.findOne( {email} );
 
-        const match = await bcrypt.compare(password, user.password)
+        const user = await User.findOne( { email } );
+
+        console.log(password, user.password)
+        const match = bcrypt.compareSync(password, user.password)
 
         if(!match){
-            throw Error('Incorrect password')
+            res.status(500).json({ message: 'Incorrect Password '})
         }
         else 
         {
@@ -212,6 +214,7 @@ router.post('/security/verify/users/:email/security-questions', async (req, res)
 
 router.post('/security/users/:email/reset-password', async (req, res) => {
   try {
+    //searches for user 
     const user = await User.findOne({ 'email': req.params.email })
 
     //throw error if no email
@@ -219,14 +222,19 @@ router.post('/security/users/:email/reset-password', async (req, res) => {
       return res.status(500).json(' User not found or does not exist. ')
     }
 
+    //pulls new requested password from req.body
     const newPassword = req.body.password
+
+    //hashes together new password using bcrypt
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(newPassword, salt)
 
+    //sets new password
     user.set({
       password: hash
     })
 
+    //returns user
     return res.status(200).json(user)
   }
   catch(error) {
