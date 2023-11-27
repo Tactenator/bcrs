@@ -49,16 +49,45 @@ router.post('/signin', async(req, res) => {
     try {
         const user = await User.findOne( {email} );
 
-        if (user.password === password) {
-          res.status(200).json(user);
+        const match = await bcrypt.compare(password, user.password)
+
+        if(!match){
+            throw Error('Incorrect password')
         }
-        else {
-          throw new Error('Invalid email or password.');
+        else 
+        {
+          res.status(200).json(user);
         }
     }
     catch (error){
         res.status(400).json({error: error.message});
     }
+});
+
+router.post('/register', async (req, res) => {
+
+  const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role } = req.body; 
+
+  if(!username || !firstName || !lastName || !email || !password || phoneNumber || address || isDisabled || userId || role)
+  {
+      throw Error('All fields are required.')
+  }
+
+  const exists = await this.findOne({ email })
+
+  if(exists)
+  {
+      throw Error('Email already in use.'); 
+  }
+
+  // mypassword
+  const salt = await bcrypt.genSalt(10); 
+  const hash = await bcrypt.hash(password, salt)
+
+  const user = await this.create({username, firstName, lastName, email, password: hash })
+
+  return user; 
+
 });
 
 module.exports = router;

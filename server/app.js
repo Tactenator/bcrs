@@ -21,7 +21,7 @@ app.use(cors())
 app.use(morgan('dev'));
 
 const userRoutes = require('./routes/user-routes')
-const securityRoutes = require('./routes/signin-route')
+const securityRoutes = require('./routes/security-route')
 
 const options = {
   definition: {
