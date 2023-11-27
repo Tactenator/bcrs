@@ -183,20 +183,27 @@ catch(error) {
  */
 router.post('/security/verify/users/:email/security-questions', async (req, res) => {
   try {
+    //find user by email
     const user = await User.findOne({ 'email': req.params.email })
     
+    //throw error if no email
     if(!user) { 
       return res.status(500).json(' User not found or does not exist. ')
     }
     
+    //grab questions from user
     const questions = user.selectedSecurityQuestions;
+
+    //find question that is being asked based on a question ID 
     const question = questions.find(e => e.questionId === req.body.questionId )
     
+    //return 200 status for correct answer
     if(question.answer === req.body.answer) {
       return res.status(200).json("Correct") 
     }
 
-    return res.status(400).json("Incorrect answer given. ")
+    //return 500 status if incorrect
+    return res.status(500).json("Incorrect answer given. ")
   }
   catch(error) {
     res.status(400).json({ error: `${error.message}`})
