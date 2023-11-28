@@ -292,6 +292,53 @@ router.delete("/users/:userId", async (req, res, next) => {
   }
 });
 
+/**
+ * getSecurityQuestions
+ * @openapi
+ * /api/users/{email}/security-questions:
+ *   get:
+ *     tags:
+ *       - Users
+ *     name: GetSecurityQuestions
+ *     summary: Get's a users security questions
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Id of the user to update.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: "Successful retrieval of users security questions"
+ *       '400':
+ *         description: "Bad Request"
+ *       '404':
+ *         description: "Not Found"
+ *       '500':
+ *         description: "Server exceptions"
+ */
+router.get('/users/:email/security-questions', async (req, res) => {
+  console.log(req.params.email);
+  //searches for user based on the id variable.
+  const user = await User.findOne({ email: req.params.email })
+
+  if(!user)
+  {
+      //if there is no user with that id, returns status 404 and a message that user can't be found
+      return res.status(404).json({error: "No user can be found"});
+  }
+
+  //if successful, returns user object
+  res.status(200).json(user.selectedSecurityQuestions.map(selection => {
+    return {
+      question: selection.question,
+      questionId: selection.questionId,
+      _id: selection.id
+    }
+  }));
+})
+
 //temporary route to add a security question
 router.post('/users/:email/security-questions', async (req, res) => {
 
@@ -307,13 +354,13 @@ router.post('/users/:email/security-questions', async (req, res) => {
         {
             //if a user is found, a new invoice object is created and initialized with the req.body values
             const newQuestion = {
-                question: req.body.question, 
+                question: req.body.question,
                 answer: req.body.answer,
                 questionId: req.body.questionId
-            }   
-            
+            }
+
             user.selectedSecurityQuestions.push(newQuestion)
-            
+
             //saves the new data to the database
             user.save()
             res.status(200).json(user)

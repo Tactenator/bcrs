@@ -56,7 +56,7 @@ router.post('/signin', async(req, res) => {
         if(!match){
             res.status(500).json({ message: 'Incorrect Password '})
         }
-        else 
+        else
         {
           res.status(200).json(user);
         }
@@ -101,13 +101,13 @@ router.post('/signin', async(req, res) => {
  *                 type: string
  *               lastName:
  *                 type: string
- *               phoneNumber: 
+ *               phoneNumber:
  *                 type: string
- *               address: 
+ *               address:
  *                 type: string
  *               isDisabled:
  *                 type: boolean
- *               userId: 
+ *               userId:
  *                 type: string
  *               role:
  *                 type: string
@@ -120,9 +120,9 @@ router.post('/signin', async(req, res) => {
  *         description: MongoDB Exception
  */
 router.post('/security/register', async (req, res) => {
-  
+
 try {
-  const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role } = req.body; 
+  const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role } = req.body;
 
   if(!email || !password || !firstName || !lastName || !phoneNumber || !address || !userId || !role)
   {
@@ -133,10 +133,10 @@ try {
 
   if(exists)
   {
-    return res.status(500).json({ error: 'Email already exists'}) 
+    return res.status(500).json({ error: 'Email already exists'})
   }
 
-  const salt = await bcrypt.genSalt(10); 
+  const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt)
 
   const user = await User.create({email, password: hash, firstName, lastName, phoneNumber, address, isDisabled, userId, role })
@@ -146,21 +146,20 @@ try {
 catch(error) {
   res.status(400).json({ error: `${error.message}`})
 }
-   
+
 
 });
 
 
-
 //Verify Security Questions
 /**
- * VeryifySecurityQuestions
+ * VeryifySecurityQuestion
  * @openapi
  * /api/security/verify/users/{email}/security-questions:
  *   post:
  *     tags:
  *       - Security
- *     name: VerifySecurityQuestions
+ *     name: VerifySecurityQuestion
  *     summary: Verifies security question answers
  *     requestBody:
  *       description: Question ID and the answer
@@ -187,21 +186,21 @@ router.post('/security/verify/users/:email/security-questions', async (req, res)
   try {
     //find user by email
     const user = await User.findOne({ 'email': req.params.email })
-    
+
     //throw error if no email
-    if(!user) { 
+    if(!user) {
       return res.status(500).json(' User not found or does not exist. ')
     }
-    
+
     //grab questions from user
     const questions = user.selectedSecurityQuestions;
 
-    //find question that is being asked based on a question ID 
+    //find question that is being asked based on a question ID
     const question = questions.find(e => e.questionId === req.body.questionId )
-    
+
     //return 200 status for correct answer
     if(question.answer === req.body.answer) {
-      return res.status(200).json("Correct") 
+      return res.status(200).json("Correct")
     }
 
     //return 500 status if incorrect
@@ -212,13 +211,111 @@ router.post('/security/verify/users/:email/security-questions', async (req, res)
   }
 })
 
-router.post('/security/users/:email/reset-password', async (req, res) => {
+/**
+ * @swagger
+ *
+ * components:
+ *   schemas:
+ *     SubmittedAnswer:
+ *       required:
+ *         - _id
+ *         - questionId
+ *         - question
+ *         - answer
+ *       properties:
+ *         _id:
+ *           type: string
+ *         questionId:
+ *           type: string
+ *         question:
+ *           type: string
+ *         answer:
+ *           type: string
+ *     SubmittedAnswers:
+ *       type: array
+ *       items:
+ *         $ref: "#/components/schemas/SubmittedAnswer"
+ */
+
+/**
+ * VeryifySecurityQuestions
+ * @openapi
+ * /api/security/{email}/verify-security-questions:
+ *   post:
+ *     tags:
+ *       - Security
+ *     name: VerifySecurityQuestions
+ *     summary: Verifies security question answers
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Id of the user to verify.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: The list of submitted answers
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/SubmittedAnswers"
+ *     responses:
+ *       '200':
+ *         description: Questions were all answered correctly
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.post('/security/:email/verify-security-questions', async (req, res) => {
   try {
-    //searches for user 
+    //find user by email
     const user = await User.findOne({ 'email': req.params.email })
 
     //throw error if no email
-    if(!user) { 
+    if(!user) {
+      return res.status(500).json(' User not found or does not exist. ')
+    }
+
+    //grab questions from user, map to a question array
+    const questions = user.selectedSecurityQuestions.map(e => {
+      return {
+        _id: e.id,
+        question: e.question,
+        questionId: e.questionId,
+        answer: e.answer,
+      }
+    });
+
+    const results = [];
+
+    questions.forEach(question => {
+      const submitted = req.body.find(q => q._id === question._id);
+
+      //return 200 status for correct answer
+      results.push(question.answer === submitted.answer)
+    })
+
+    if(results.every(result => result === true)) {
+      return res.status(200).json("Correct")
+    }
+    else {
+      //return 500 status if incorrect
+      return res.status(500).json("Incorrect answers given.")
+    }
+  }
+  catch(error) {
+    res.status(400).json({ error: `${error.message}`})
+  }
+})
+
+router.post('/security/users/:email/reset-password', async (req, res) => {
+  try {
+    //searches for user
+    const user = await User.findOne({ 'email': req.params.email })
+
+    //throw error if no email
+    if(!user) {
       return res.status(500).json(' User not found or does not exist. ')
     }
 
