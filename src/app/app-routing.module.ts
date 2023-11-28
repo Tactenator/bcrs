@@ -73,7 +73,13 @@ const routes: Routes = [
         path:'not-found',
         component: NotFoundComponent,
         title: 'BCRS: 404 Not Found'
-      },
+      }
+      // ,
+      // {
+      //   path: 'user-table',
+      //   component: UserTableComponent,
+      //   canMatch: [adminGuard],
+      // }
     ]
   },
 

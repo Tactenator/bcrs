@@ -42,6 +42,11 @@ import { UserEditComponent } from './user-configuration/user-edit/user-edit.comp
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqComponent } from './faq/faq.component';
+import { User } from './models/user';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { UserTableService } from './user-management/user-table.service';
+import { UserTableComponent } from './user-management/user-table/user-table.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -53,6 +58,7 @@ import { FaqComponent } from './faq/faq.component';
     ProfileComponent,
     BaseNavComponent,
     NotFoundComponent,
+    UserTableComponent,
     UserConfigurationComponent,
     ConfigurationTableComponent,
     UserDeleteDialogComponent,
@@ -81,9 +87,12 @@ import { FaqComponent } from './faq/faq.component';
     MatCheckboxModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  providers: [],
+  providers: [UserTableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
