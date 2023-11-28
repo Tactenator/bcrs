@@ -74,12 +74,6 @@ const routes: Routes = [
         component: NotFoundComponent,
         title: 'BCRS: 404 Not Found'
       }
-      // ,
-      // {
-      //   path: 'user-table',
-      //   component: UserTableComponent,
-      //   canMatch: [adminGuard],
-      // }
     ]
   },
 
