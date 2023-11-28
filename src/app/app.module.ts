@@ -1,3 +1,4 @@
+import { User } from './models/user';
 /**
  * Title: app.module.ts
  * Author: Professor Krasso
@@ -35,6 +36,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { BaseNavComponent } from './layouts/nav/base-nav/base-nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ServiceTableComponent } from './service-management/service-table/service-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { UserTableComponent } from './user-management/user-table/user-table.component';
+import { UserTableService } from './user-management/user-table.service';
 import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
 import { ConfigurationTableComponent } from './user-configuration/configuration-table/configuration-table.component';
 import { UserDeleteDialogComponent } from './user-configuration/user-delete-dialog/user-delete-dialog.component';
@@ -53,6 +59,8 @@ import { FaqComponent } from './faq/faq.component';
     ProfileComponent,
     BaseNavComponent,
     NotFoundComponent,
+    ServiceTableComponent,
+    UserTableComponent,
     UserConfigurationComponent,
     ConfigurationTableComponent,
     UserDeleteDialogComponent,
@@ -81,9 +89,12 @@ import { FaqComponent } from './faq/faq.component';
     MatCheckboxModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [UserTableService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
