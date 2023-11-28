@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
+import { SecurityQuestionResponse } from 'src/app/models/security-question';
 import { User } from 'src/app/models/user';
 
 @Injectable({
@@ -40,6 +41,10 @@ export class SignInService {
           return user;
         })
       );
+  }
+
+  getSecurityQuestions(email: string) {
+    return this.http.get<SecurityQuestionResponse[]>(`/api/users/${email}/security-questions`);
   }
 
   signOut() {

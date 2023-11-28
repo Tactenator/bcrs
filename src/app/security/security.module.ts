@@ -1,7 +1,7 @@
 /**
  * Title: security.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
+ * Author: Group 1
+ * Date: Nov 19 2023
 */
 
 // imports statements
@@ -17,10 +17,12 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
-    SignInComponent
+    SignInComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
