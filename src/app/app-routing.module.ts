@@ -13,10 +13,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { adminGuard } from './guards/admin.guard';
 import { standardGuard } from './guards/standard.guard';
-import { UserTableComponent } from './user-management/user-table/user-table.component';
 import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
 import { UserEditComponent } from './user-configuration/user-edit/user-edit.component';
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
+import { FaqComponent } from './faq/faq.component';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -60,14 +61,22 @@ const routes: Routes = [
         canMatch: [adminGuard],
       },
       {
+        path: 'faq',
+        component: FaqComponent,
+        title: 'BCRS: FAQs',
+      },
+      {
+        path: 'employee-directory',
+        component: EmployeeDirectoryComponent,
+        title: 'BCRS: Employee Directory',
+      },
+      {
         path: 'not-found',
         component: NotFoundComponent,
         title: 'BCRS: 404 Not Found',
       },
     ],
   },
- 
- 
 
   // this should catch any randomly wrong URL and redirect it to the 404 Page.
   {
