@@ -18,6 +18,8 @@ import { UserEditComponent } from './user-configuration/user-edit/user-edit.comp
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
 import { FaqComponent } from './faq/faq.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
+import { FaqComponent } from './faq/faq.component';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -59,6 +61,26 @@ const routes: Routes = [
         path: 'user-management/:userId',
         component: UserEditComponent,
         canMatch: [adminGuard],
+      },
+      {
+        path: 'faq',
+        component: FaqComponent,
+        title: 'BCRS: FAQs'
+      },
+      {
+        path: 'employee-directory',
+        component: EmployeeDirectoryComponent,
+        title: 'BCRS: Employee Directory'
+      },
+      {
+        path: 'faq',
+        component: FaqComponent,
+        title: 'BCRS: FAQs'
+      },
+      {
+        path: 'employee-directory',
+        component: EmployeeDirectoryComponent,
+        title: 'BCRS: Employee Directory'
       },
       {
         path: 'faq',

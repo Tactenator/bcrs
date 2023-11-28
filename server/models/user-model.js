@@ -45,11 +45,14 @@ const invoiceSchema = new mongoose.Schema({
 })
 
 const securityQuestionsSchema = new mongoose.Schema({
-    "questionText" : {
+    "question" : {
         type: String
     },
-    "answerText": {
+    "answer": {
         type: String
+    }, 
+    "questionId": {
+        type: String 
     }
 })
 
@@ -91,27 +94,6 @@ const userSchema = new mongoose.Schema({
         type: [invoiceSchema]
     }
 });
-
-userSchema.statics.login = async function(email){
-  if(!email)
-  {
-      throw Error('All fields are required.')
-  }
-
-  const user = await this.findOne({ email })
-
-  if(!user){
-      throw Error('Incorrect Email');
-  }
-
-  // const match = await bcrypt.compare(password, user.password)
-
-  // if(!match){
-  //     throw Error('Incorrect password')
-  // }
-
-  return user;
-}
 
 //exports the schema
 module.exports = mongoose.model('User', userSchema);

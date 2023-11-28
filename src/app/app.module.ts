@@ -46,6 +46,8 @@ import { ConfigurationTableComponent } from './user-configuration/configuration-
 import { UserDeleteDialogComponent } from './user-configuration/user-delete-dialog/user-delete-dialog.component';
 import { UserEditComponent } from './user-configuration/user-edit/user-edit.component';
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
+import { FaqComponent } from './faq/faq.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -64,6 +66,8 @@ import { UserCreateComponent } from './user-configuration/user-create/user-creat
     UserDeleteDialogComponent,
     UserEditComponent,
     UserCreateComponent,
+    EmployeeDirectoryComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,
