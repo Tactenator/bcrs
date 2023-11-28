@@ -51,7 +51,7 @@ router.post('/signin', async(req, res) => {
         const user = await User.findOne( { email } );
 
         console.log(password, user.password)
-        const match = bcrypt.compareSync(password, user.password)
+        const match = bcrypt.compare(password, user.password);
 
         if(!match){
             res.status(500).json({ message: 'Incorrect Password '})
@@ -309,6 +309,40 @@ router.post('/security/:email/verify-security-questions', async (req, res) => {
   }
 })
 
+/**
+ * ResetPassword
+ * @openapi
+ * /api/security/users/{email}/reset-password:
+ *   post:
+ *     tags:
+ *       - Security
+ *     name: ResetPassword
+ *     summary: Resets a user's password
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Id of the user to verify.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Password to reset to
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - password
+ *             properties:
+ *               password:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: User's password reset successfully
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
 router.post('/security/users/:email/reset-password', async (req, res) => {
   try {
     //searches for user
