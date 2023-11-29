@@ -1,0 +1,17 @@
+.header {
+    margin: 1em auto 1em;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #B71C1C;
+  }
+  
+  .redirect-links {
+    text-align: center;
+    padding: 1em;
+  }
+  
+  a {
+    color: #FFB300;
+    text-decoration: underline;
+  }
