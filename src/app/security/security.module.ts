@@ -18,12 +18,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { SecurityRoutingModule } from './security-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegisterComponent } from './register/register.component';
 import { VerifyQuestionsComponent } from './verify-questions/verify-questions.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     ResetPasswordComponent,
+    RegisterComponent,
     VerifyQuestionsComponent
   ],
   imports: [
