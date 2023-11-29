@@ -50,8 +50,9 @@ export class ResetPasswordComponent implements OnInit{
     const formValues = this.resetForm.value;
 
     this.signInService.getSecurityQuestions(formValues.email).subscribe({
-      next: (question) => {
-        // this.router.navigate(['verify-questions']);
+      next: (questions) => {
+        console.log(questions);
+        this.router.navigate(['/security/verify-questions', { questions: JSON.stringify(questions), email: formValues.email }]);
       },
       error(err) {
         console.log(err);

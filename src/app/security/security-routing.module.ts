@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { VerifyQuestionsComponent } from './verify-questions/verify-questions.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
@@ -25,15 +26,19 @@ const routes: Routes = [
         component: ResetPasswordComponent,
       },
       {
+        path: 'verify-questions',
+        component: VerifyQuestionsComponent,
+      },
+      {
         path: 'register',
         component: RegisterComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SecurityRoutingModule { }
+export class SecurityRoutingModule {}
