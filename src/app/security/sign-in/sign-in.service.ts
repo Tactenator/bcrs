@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
 import { SecurityQuestionResponse } from 'src/app/models/security-question';
 import { User } from 'src/app/models/user';
+import { VerifyQuestionRequest } from 'src/app/models/verify-question';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,10 @@ export class SignInService {
 
   getSecurityQuestions(email: string) {
     return this.http.get<SecurityQuestionResponse[]>(`/api/users/${email}/security-questions`);
+  }
+
+  verifySecurityQuestions(email: string, request: VerifyQuestionRequest[]) {
+    return this.http.post<SecurityQuestionResponse[]>(`/api/security/${email}/verify-security-questions`, request);
   }
 
   signOut() {
