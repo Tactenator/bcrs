@@ -50,7 +50,6 @@ router.post('/signin', async(req, res) => {
 
         const user = await User.findOne( { email } );
 
-        console.log(password, user.password)
         const match = bcrypt.compare(password, user.password);
 
         if(!match){
