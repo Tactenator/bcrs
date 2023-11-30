@@ -17,6 +17,7 @@ import { SignInService } from '../sign-in/sign-in.service';
 import { MatStepper } from '@angular/material/stepper';
 import { SecurityQuestionResponse } from 'src/app/models/security-question';
 import { VerifyQuestionRequest } from 'src/app/models/verify-question';
+import { ResetPasswordRequest } from 'src/app/models/reset-password';
 
 @Component({
   selector: 'app-reset-password',
@@ -99,7 +100,6 @@ export class ResetPasswordComponent implements OnInit{
       });
     }
 
-
     this.signInService.verifySecurityQuestions(this.email, questionRequests).subscribe((res) => {
       console.log(res);
       this.resetPasswordStepper.next();
@@ -113,15 +113,18 @@ export class ResetPasswordComponent implements OnInit{
   resetPassword() {
     const formValues = this.passwordForm.value;
 
-    // this.signInService.getSecurityQuestions(formValues.email).subscribe((questions) => {
-    //   console.log(questions);
-    //   this.buildQuestionsForm(questions, formValues.email);
-    //   this.resetPasswordStepper.next();
-    // },
-    // (err) => {
-    //   console.log(err);
-    //   this.apiError = 'Email not found.';
-    // });
+    const request: ResetPasswordRequest = {
+      password: formValues.password
+    };
+
+    this.signInService.resetPassword(this.email, request).subscribe((res) => {
+      console.log(res);
+      this.router.navigate(['/security/sign-in']);
+    },
+    (err) => {
+      console.log(err);
+      this.apiError = 'Email not found.';
+    });
   }
 
   getEmailErrorMessage() {

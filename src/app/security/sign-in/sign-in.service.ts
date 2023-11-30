@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
+import { ResetPasswordRequest } from 'src/app/models/reset-password';
 import { SecurityQuestionResponse } from 'src/app/models/security-question';
 import { User } from 'src/app/models/user';
 import { VerifyQuestionRequest } from 'src/app/models/verify-question';
@@ -50,6 +51,10 @@ export class SignInService {
 
   verifySecurityQuestions(email: string, request: VerifyQuestionRequest[]) {
     return this.http.post<SecurityQuestionResponse[]>(`/api/security/${email}/verify-security-questions`, request);
+  }
+
+  resetPassword(email: string, request: ResetPasswordRequest) {
+    return this.http.post<SecurityQuestionResponse[]>(`/api/security/users/${email}/reset-password`, request);
   }
 
   signOut() {
