@@ -50,7 +50,7 @@ router.post('/signin', async(req, res) => {
 
         const user = await User.findOne( { email } );
 
-        const match = bcrypt.compare(password, user.password);
+        const match = await bcrypt.compare(password, user.password);
 
         if(!match){
             res.status(500).json({ message: 'Incorrect Password '})
@@ -357,12 +357,13 @@ router.post('/security/users/:email/reset-password', async (req, res) => {
 
     //hashes together new password using bcrypt
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(newPassword, salt)
+    const hash = await bcrypt.hash(newPassword, salt);
 
     //sets new password
     user.set({
       password: hash
-    })
+    });
+    await user.save();
 
     //returns user
     return res.status(200).json(user)
