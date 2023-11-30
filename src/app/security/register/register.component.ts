@@ -13,6 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
+//
+import { confirmPasswordValidator } from './confirmPasswordValidator';
 
 @Component({
   selector: 'app-register',
@@ -50,18 +52,22 @@ export class RegisterComponent implements OnInit {
       ],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required])],
-      confirmPassword: [
-        '',
-        Validators.compose([Validators.required]),
-      ],
+      // confirmPassword: ['', Validators.compose([Validators.required])],
+      //^?
+      // this feature is under construction
+      // I want to confirm the password reentering the same value and comparing it
+      // to enable the submit button
+      validators: confirmPasswordValidator,
+      // ^?
     });
   }
+
   get form() {
     return this.registerForm.controls;
   }
   onSubmit() {
-    console.log('Register service called');
     const formValues = this.registerForm.value;
+    console.log(formValues);
     this.registerService
       .register(
         formValues.firstName,
@@ -77,8 +83,8 @@ export class RegisterComponent implements OnInit {
           console.log(err);
         },
       });
+    // console.log(formValues.Validators.confirmPasswordValidator);
     // const formValues = this.registerForm.value;
-    // console.log(formValues);
     // this.registerService.register();
     // this.registerService.onSubmit();
     // this.router.navigate(['']);

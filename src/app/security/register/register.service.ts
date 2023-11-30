@@ -26,17 +26,28 @@ export class RegisterService {
     firstName: string,
     lastName: string,
     email: string,
-    passwordInitial: string
+    password: string,
+    phoneNumber?: undefined,
+    address?: undefined,
+    userId?: undefined,
+    //How is userId determined?
+    role?: undefined,
+    securityQuestions?: undefined
   ) {
     console.log('Register service called');
-    return this.http.post<User>('/api/register/', {
+    return this.http.post<User>('/api/users/', {
       firstName,
       lastName,
       email,
-      passwordInitial,
+      password,
+      phoneNumber,
+      address,
+      userId,
+      role,
+      securityQuestions,
     });
   }
-  onSubmit() {
-    console.log('Register2 service called');
-  }
+  // onSubmit() {
+  //   console.log('Register2 service called');
+  // }
 }

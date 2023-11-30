@@ -39,22 +39,22 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-            </div> 
-            <div class="row justify-content-around">
+            </div>
+            <!-- <div class="row justify-content-around">
                 <mat-form-field class="col-12 col-md-4">
 
                     <mat-label>Re-enter</mat-label>
                     <input matInput [type]="hide ? 'confirmPassword' : 'text'" required
                         formControlName="confirmPassword">
-                    <!-- TODO: fix the validation and footer was set
-                    to sticky to let see the submit button -->
-                    <mat-error *ngIf="registerForm.controls['password'].invalid" style="
+                        <mat-error *ngIf="" style="
                     color: #E65100;">
                         Passwords do not match
                     </mat-error>
-
+                    
                 </mat-form-field>
-            </div>
+            </div> -->
+            <!-- TODO: fix the validation and footer was set
+            to sticky to let see the submit button -->
             <div class="row justify-content-around">
                 <button mat-raised-button class="col-12 col-md-4" color="primary" type="submit"
                     [disabled]="!registerForm.valid">Submit</button>
