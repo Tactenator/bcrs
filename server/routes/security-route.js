@@ -152,65 +152,6 @@ catch(error) {
 
 //Verify Security Questions
 /**
- * VeryifySecurityQuestion
- * @openapi
- * /api/security/verify/users/{email}/security-questions:
- *   post:
- *     tags:
- *       - Security
- *     name: VerifySecurityQuestion
- *     summary: Verifies security question answers
- *     requestBody:
- *       description: Question ID and the answer
- *       content:
- *         application/json:
- *           schema:
- *             required:
- *               - questionId
- *               - answer
- *             properties:
- *               questionId:
- *                 type: string
- *               answer:
- *                 type: string
- *     responses:
- *       '200':
- *         description: Correct Answer
- *       '500':
- *         description: Server Exception
- *       '501':
- *         description: MongoDB Exception
- */
-router.post('/security/verify/users/:email/security-questions', async (req, res) => {
-  try {
-    //find user by email
-    const user = await User.findOne({ 'email': req.params.email })
-
-    //throw error if no email
-    if(!user) {
-      return res.status(500).json(' User not found or does not exist. ')
-    }
-
-    //grab questions from user
-    const questions = user.selectedSecurityQuestions;
-
-    //find question that is being asked based on a question ID
-    const question = questions.find(e => e.questionId === req.body.questionId )
-
-    //return 200 status for correct answer
-    if(question.answer === req.body.answer) {
-      return res.status(200).json("Correct")
-    }
-
-    //return 500 status if incorrect
-    return res.status(500).json("Incorrect answer given. ")
-  }
-  catch(error) {
-    res.status(400).json({ error: `${error.message}`})
-  }
-})
-
-/**
  * @swagger
  *
  * components:
@@ -237,7 +178,7 @@ router.post('/security/verify/users/:email/security-questions', async (req, res)
  */
 
 /**
- * VeryifySecurityQuestions
+ * VerifySecurityQuestions
  * @openapi
  * /api/security/{email}/verify-security-questions:
  *   post:
