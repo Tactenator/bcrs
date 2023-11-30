@@ -372,5 +372,57 @@ router.post('/security/users/:email/reset-password', async (req, res) => {
   }
 })
 
+/**
+ * VerifyUser
+ * @openapi
+ * /api/security/verify/users/{email}/:
+ *   post:
+ *     tags:
+ *       - Security
+ *     name: VerifyUser
+ *     summary: Verifies a user
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: Email of the user to verify
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Email of the user
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: User's verified successfully
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.post('/security/verify/users/:email', async (req, res) => {
+  try {
+    //searches for user
+    const user = await User.findOne({ 'email': req.params.email })
+
+    //throw error if no email
+    if(!user) {
+      return res.status(500).json(' User not found or does not exist. ')
+    }
+
+    //returns user
+    return res.status(200).json(user)
+  }
+  catch(error) {
+    res.status(400).json({ error: `${error.message}`})
+  }
+})
+
 
 module.exports = router;
