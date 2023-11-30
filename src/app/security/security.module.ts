@@ -14,19 +14,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegisterComponent } from './register/register.component';
-import { VerifyQuestionsComponent } from './verify-questions/verify-questions.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     ResetPasswordComponent,
-    RegisterComponent,
-    VerifyQuestionsComponent
+    RegisterComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +35,7 @@ import { VerifyQuestionsComponent } from './verify-questions/verify-questions.co
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatStepperModule,
     SecurityRoutingModule
   ]
 })

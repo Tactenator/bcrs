@@ -43,9 +43,9 @@ import { UserEditComponent } from './user-configuration/user-edit/user-edit.comp
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqComponent } from './faq/faq.component';
-import { User } from './models/user';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -89,7 +89,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatStepperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
