@@ -1,0 +1,15 @@
+/* faq-page.component.css */
+
+.faq-page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.faq-item {
+  margin-top: 16px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 26px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
