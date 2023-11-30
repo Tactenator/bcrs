@@ -286,12 +286,10 @@ router.post('/security/:email/verify-security-questions', async (req, res) => {
       }
     });
 
-    console.log(req.body)
-
     const results = [];
 
     questions.forEach(question => {
-      const submitted = req.body.find(q => q._i === question._id);
+      const submitted = req.body.find(q => q._id === question._id);
 
       //return 200 status for correct answer
       results.push(question.answer === submitted.answer)
