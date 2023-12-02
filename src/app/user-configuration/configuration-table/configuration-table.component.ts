@@ -1,3 +1,12 @@
+/**
+ * Title: configuration-table.component.ts
+ * Author: Tiffany Reyes
+ * Date: 25 Nov 2023
+ * Description: configuration table component
+ */
+
+// importing class elements
+
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
