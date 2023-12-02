@@ -230,11 +230,16 @@ router.post('/security/:email/verify-security-questions', async (req, res) => {
     const results = [];
 
     questions.forEach(question => {
-      const submitted = req.body.find(q => q._id === question._id);
+      let submitted = {
+        "answer": req.body.answer,
+        "_id": req.body._id
+      }
 
-      //return 200 status for correct answer
-      results.push(question.answer === submitted.answer)
+      let newQuestion = questions.find(q => q._id === submitted._id)
+      results.push(submitted.answer === newQuestion.answer)
     })
+
+
 
     if(results.every(result => result === true)) {
       return res.status(200).json("Correct")
