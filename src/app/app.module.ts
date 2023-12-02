@@ -1,6 +1,6 @@
 /**
  * Title: app.module.ts
- * Author: Professor Krasso
+ * Author: Group 1
  * Modified by: Patrick Cuauro
  * Date: 11/15/23
  */

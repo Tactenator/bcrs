@@ -1,3 +1,12 @@
+/**
+ * Title: user-configuration.component.ts
+ * Author: Tiffany Reyes
+ * Date: 25 Nov 2023
+ * Description: user configuration component
+ */
+
+// importing class elements
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { Subject, takeUntil } from 'rxjs';

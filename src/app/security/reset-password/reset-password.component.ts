@@ -1,18 +1,14 @@
 /**
- * Title: sign-in.component.ts
+ * Title: reset-password.component.ts
  * Author: Tiffany R.
  * Date: 20 Nov 2023
- * Description: sign-in component
+ * Description: reset password component
  */
 
 // importing class elements
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
 import { SignInService } from '../sign-in/sign-in.service';
 import { MatStepper } from '@angular/material/stepper';
 import { SecurityQuestionResponse } from 'src/app/models/security-question';
@@ -38,10 +34,8 @@ export class ResetPasswordComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private cookieService: CookieService,
     private fb: FormBuilder,
-    private signInService: SignInService,
-    private _formBuilder: FormBuilder
+    private signInService: SignInService
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +67,8 @@ export class ResetPasswordComponent implements OnInit{
     const formValues = this.resetForm.value;
 
     this.signInService.getSecurityQuestions(formValues.email).subscribe((questions) => {
-      console.log(questions);
       this.buildQuestionsForm(questions, formValues.email);
+      this.apiError = '';
       this.resetPasswordStepper.next();
     },
     (err) => {
@@ -101,33 +95,31 @@ export class ResetPasswordComponent implements OnInit{
     }
 
     this.signInService.verifySecurityQuestions(this.email, questionRequests).subscribe((res) => {
-      console.log(res);
+      this.apiError = '';
       this.resetPasswordStepper.next();
     },
     (err) => {
       console.log(err);
-      this.apiError = 'Invalid answer(s). Answers are case-sensitive.';
+      this.apiError = 'Invalid answer. NOTE: Answers are case-sensitive.';
     });
   }
 
-  resetPassword() {
+  resetPassword() { // submit a reset password request to backend
     const formValues = this.passwordForm.value;
-
+    // build request
     const request: ResetPasswordRequest = {
       password: formValues.password
     };
 
     this.signInService.resetPassword(this.email, request).subscribe((res) => {
-      console.log(res);
       this.router.navigate(['/security/sign-in']);
     },
     (err) => {
       console.log(err);
-      this.apiError = 'Email not found.';
     });
   }
 
-  getEmailErrorMessage() {
+  getEmailErrorMessage() { // email error msg
     const emailControl = this.resetForm.controls['email'];
 
     if (emailControl.hasError('required')) {
@@ -137,7 +129,7 @@ export class ResetPasswordComponent implements OnInit{
     return emailControl.hasError('email') ? 'Not a valid email.' : '';
   }
 
-  getPasswordErrorMessage() {
+  getPasswordErrorMessage() { // password error msg
     const passwordControl = this.passwordForm.controls['password'];
 
     if (passwordControl.hasError('required')) {
@@ -147,7 +139,7 @@ export class ResetPasswordComponent implements OnInit{
     return '';
   }
 
-  buildQuestionsForm(questions: SecurityQuestionResponse[], email: string) {
+  buildQuestionsForm(questions: SecurityQuestionResponse[], email: string) { // security question retrieval for mat-stepper
     this.questions = questions;
     this.email = email;
     const group: any = {};

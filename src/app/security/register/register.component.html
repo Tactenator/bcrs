@@ -52,20 +52,14 @@
             <div class="row justify-content-around">
                 <mat-form-field class="col-12 col-md-4">
 
-                    <mat-label>Re-enter password</mat-label>
-                    <input matInput required formControlName="confirmPassword">
-            </mat-form-field>
-            </div>
-            <div class="row justify-content-around">
-                <mat-form-field class="col-12 col-md-4">
-                    <mat-label>Phone Number</mat-label>
-                    <input matInput required formControlName="phoneNumber">
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-around">
-                <mat-form-field class="col-12 col-md-4">
-                    <mat-label>Address</mat-label>
-                    <input matInput required formControlName="address">
+                    <mat-label>Re-enter</mat-label>
+                    <input matInput [type]="hide ? 'confirmPassword' : 'text'" required
+                        formControlName="confirmPassword">
+                        <mat-error *ngIf="" style="
+                    color: #E65100;">
+                        Passwords do not match
+                    </mat-error>
+
                 </mat-form-field>
             </div>
             <div class="row justify-content-around">
@@ -73,7 +67,7 @@
             </div>
         </form>
         <div class="redirect-links">
-            <a routerLink="/" class="row justify-content-around">Go Back</a>
+          <a routerLink="/security/sign-in" class="row justify-content-around">Go Back</a>
         </div>
     </mat-card-content>
 </mat-card>

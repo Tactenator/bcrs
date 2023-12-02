@@ -8,6 +8,10 @@ footer {
   padding: 2em;
 }
 
+a {
+  color: #FFB300;
+}
+
 .spacer {
   flex: 1 1 auto;
 }

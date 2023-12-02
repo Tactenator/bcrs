@@ -11,11 +11,9 @@ import { SignInService } from './sign-in.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgForm } from '@angular/forms';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
 
-// import { get } from 'mongoose';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -59,7 +57,7 @@ export class SignInComponent implements OnInit {
     return this.signInForm.controls;
   }
 
-  onSubmit() {
+  onSubmit() { // submit a sign-in request to backend
     const formValues = this.signInForm.value;
 
     this.signInService.signIn(formValues.email, formValues.password).subscribe({

@@ -236,6 +236,8 @@ router.post('/security/:email/verify-security-questions', async (req, res) => {
       results.push(question.answer === submitted.answer)
     })
 
+
+
     if(results.every(result => result === true)) {
       return res.status(200).json("Correct")
     }

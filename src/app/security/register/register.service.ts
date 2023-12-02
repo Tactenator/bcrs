@@ -1,6 +1,6 @@
 /**
  * Title: register.service.ts
- * Author: Tiffany R/Patrick Cuauro.
+ * Author: Patrick Cuauro
  * Date: 25 Nov 2023
  * Description: register service
  */
