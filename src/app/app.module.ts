@@ -90,9 +90,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatPaginatorModule,
     MatSortModule,
     MatExpansionModule,
-    MatStepperModule
+    MatStepperModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

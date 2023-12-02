@@ -1,16 +1,11 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-export function confirmPasswordValidator(group: FormGroup): {
-  [key: string]: any;
-} {
-  const password = group.get('password').value;
-  const confirmPassword = group.get('confirmPassword').value;
-
-  if (password !== confirmPassword) {
-    return {
-      mismatchedPasswords: true,
-    };
+@Injectable()
+export class ConfirmPasswordValidator {
+  validate(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { notSame: true };
   }
-
-  return null;
 }

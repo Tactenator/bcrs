@@ -7,6 +7,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as e from 'express';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
@@ -27,15 +28,17 @@ export class RegisterService {
     lastName: string,
     email: string,
     password: string,
-    phoneNumber?: undefined,
-    address?: undefined,
-    userId?: undefined,
+    phoneNumber?: null,
+    address?: '',
+    userId?: '',
     //How is userId determined?
-    role?: undefined,
+    role?: 'user',
     securityQuestions?: undefined
   ) {
-    console.log('Register service called');
+    // console.log('Register service called' + email);
     return this.http.post<User>('/api/users/', {
+      // return this.http.post<User>('/security/register', {
+      
       firstName,
       lastName,
       email,
