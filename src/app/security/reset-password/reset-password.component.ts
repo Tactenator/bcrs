@@ -75,6 +75,7 @@ export class ResetPasswordComponent implements OnInit{
     this.signInService.getSecurityQuestions(formValues.email).subscribe((questions) => {
       console.log(questions);
       this.buildQuestionsForm(questions, formValues.email);
+      this.apiError = '';
       this.resetPasswordStepper.next();
     },
     (err) => {
@@ -102,11 +103,12 @@ export class ResetPasswordComponent implements OnInit{
 
     this.signInService.verifySecurityQuestions(this.email, questionRequests).subscribe((res) => {
       console.log(res);
+      this.apiError = '';
       this.resetPasswordStepper.next();
     },
     (err) => {
       console.log(err);
-      this.apiError = 'Invalid answer(s). Answers are case-sensitive.';
+      this.apiError = 'Invalid answer. NOTE: Answers are case-sensitive.';
     });
   }
 
