@@ -1,6 +1,6 @@
 /**
  * Title: register.component.ts
- * Author: Tiffany R., Patrick C.
+ * Author: Patrick C.
  * Date: 28 Nov 2023
  * Description: sign-in component
  *
