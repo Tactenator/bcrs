@@ -121,9 +121,10 @@ router.post('/signin', async(req, res) => {
 router.post('/security/register', async (req, res) => {
 
 try {
-  const { email, password, firstName, lastName, phoneNumber, address, isDisabled, userId, role } = req.body;
+  console.log(req.body);
+  const { email, password, firstName, lastName, phoneNumber, address, securityQuestions } = req.body;
 
-  if(!email || !password || !firstName || !lastName || !phoneNumber || !address || !userId || !role)
+  if(!email || !password || !firstName || !lastName || !phoneNumber || !address || !securityQuestions)
   {
       return res.status(401).json({ error: 'All fields required'})
   }
@@ -138,7 +139,7 @@ try {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await User.create({email, password: hash, firstName, lastName, phoneNumber, address, isDisabled, userId, role })
+  const user = await User.create({email, password: hash, firstName, lastName, phoneNumber, address, isDisabled: false, role: 'standard', selectedSecurityQuestions: securityQuestions})
 
   res.status(200).json(user)
 }

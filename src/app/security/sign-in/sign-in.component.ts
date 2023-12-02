@@ -7,13 +7,11 @@
 
 // importing class elements
 import { Component, OnInit } from '@angular/core';
-import { SignInService } from './sign-in.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
-
-
+import { SecurityService } from '../security.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -31,7 +29,7 @@ export class SignInComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private fb: FormBuilder,
-    private signInService: SignInService
+    private securityService: SecurityService
   ) {
     console.log(this.cookieService.get(COOKIE_KEYS.USER_ID));
   }
@@ -60,7 +58,7 @@ export class SignInComponent implements OnInit {
   onSubmit() { // submit a sign-in request to backend
     const formValues = this.signInForm.value;
 
-    this.signInService.signIn(formValues.email, formValues.password).subscribe({
+    this.securityService.signIn(formValues.email, formValues.password).subscribe({
       next: (employee) => {
         this.router.navigate(['profile']);
       },

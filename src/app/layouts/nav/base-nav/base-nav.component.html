@@ -15,10 +15,12 @@
         <button mat-button *ngIf="role === 'admin'" routerLink="user-management">User Management</button>
       </ng-container>
 
-      <ng-container *ngIf="isLoggedIn$ | async as isLoggedIn">
-        <button mat-button *ngIf="isLoggedIn === 'false'" routerLink="/security/sign-in">Sign In<mat-icon>account_circle</mat-icon></button>
-        <button mat-button *ngIf="isLoggedIn === 'true'" (click)="signOut()">Sign Out<mat-icon>account_circle</mat-icon></button>
+      <ng-container *ngIf="(isLoggedIn$ | async) as isLoggedIn; else loggedOut">
+        <button mat-button (click)="signOut()">Sign Out<mat-icon>account_circle</mat-icon></button>
       </ng-container>
+      <ng-template #loggedOut>
+        <button mat-button routerLink="/security/sign-in">Sign In<mat-icon>account_circle</mat-icon></button>
+      </ng-template>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

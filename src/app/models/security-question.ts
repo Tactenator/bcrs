@@ -12,3 +12,8 @@ export interface SecurityQuestionResponse {
   questionId: string,
   _id: string
 }
+
+export interface SecurityQuestionRequest {
+  question: string,
+  answer: string
+}

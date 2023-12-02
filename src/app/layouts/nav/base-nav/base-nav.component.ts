@@ -9,7 +9,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { SignInService } from 'src/app/security/sign-in/sign-in.service';
+import { SecurityService } from 'src/app/security/security.service';
 
 @Component({
   selector: 'app-base-nav',
@@ -19,13 +19,13 @@ import { SignInService } from 'src/app/security/sign-in/sign-in.service';
 export class BaseNavComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  isLoggedIn$ = this.signInService.isLoggedIn$;
-  role$ = this.signInService.role$;
+  isLoggedIn$ = this.securityService.isLoggedIn$;
+  role$ = this.securityService.role$;
 
   constructor(
     private router: Router,
     private cookieService: CookieService,
-    private signInService: SignInService
+    private securityService: SecurityService
   ) {}
 
   openSidenav() {
@@ -33,7 +33,7 @@ export class BaseNavComponent {
   }
 
   signOut() {
-    this.signInService.signOut();
+    this.securityService.signOut();
     this.router.navigate(['/']);
   }
 }

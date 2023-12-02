@@ -7,6 +7,8 @@
 ;===========================================
 */
 
+import { SecurityQuestionRequest } from "./security-question";
+
 export interface AddUserRequest {
   firstName: string,
   lastName: string,
@@ -16,4 +18,5 @@ export interface AddUserRequest {
   address?: string,
   userId?: string,
   role?: string,
+  securityQuestions?: SecurityQuestionRequest[]
 }

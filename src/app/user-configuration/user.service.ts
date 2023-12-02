@@ -10,7 +10,7 @@ import { AddUserRequest } from '../models/add-user';
   providedIn: 'root',
 })
 export class UserService {
-  private userApiUrl = 'http://localhost:3000/api/users';
+  private userApiUrl = '/api/users';
 
   private users: User[] = [];
   private _users = new BehaviorSubject<User[]>(this.users);
