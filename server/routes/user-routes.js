@@ -136,7 +136,7 @@ router.get('/users', async (req,res) => {
 router.get('/users/:userId', async (req, res) => {
 
     //searches for user based on the id variable.
-    const user = await User.findOne({ 'userId': req.params.userId })
+    const user = await User.findById(req.params.userId)
 
     if(!user)
     {
@@ -210,7 +210,7 @@ router.get('/users/:userId', async (req, res) => {
 router.put('/users/:userId', async (req, res) => {
     try{
         //Searches for user from the user database
-        const user = await User.findOne({ 'email': req.params.email });
+        const user = await User.findById(req.params.userId);
         //if no user exists, throws an error
         if(!user){
             res.status(401).json({ error: 'Invalid user Id'})
@@ -270,7 +270,7 @@ router.put('/users/:userId', async (req, res) => {
 router.delete("/users/:userId", async (req, res, next) => {
   try{
     //Searches for user from the user database
-    const user = await User.findOne({ userId: req.params.userId })
+    const user = await User.findById(req.params.userId);
     //if no user exists, throws an error
     if(!user){
       res.status(404).json({ error: 'Not Found.'})
