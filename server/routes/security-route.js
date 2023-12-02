@@ -124,7 +124,7 @@ try {
   console.log(req.body);
   const { email, password, firstName, lastName, phoneNumber, address, securityQuestions } = req.body;
 
-  if(!email || !password || !firstName || !lastName || !phoneNumber || !address || !securityQuestions)
+  if(!email || !password || !firstName || !lastName || !securityQuestions)
   {
       return res.status(401).json({ error: 'All fields required'})
   }
