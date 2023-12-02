@@ -7,7 +7,6 @@ import { AbstractControl } from '@angular/forms';
  *
  */
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from './register.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +16,8 @@ import { COOKIE_KEYS } from 'src/app/constants/cookie-keys';
 //
 import { ConfirmPasswordValidator } from './confirmPasswordValidator';
 import { ValidationErrors } from '@angular/forms';
+import { AddUserRequest } from 'src/app/models/add-user';
+import { SecurityService } from '../security.service';
 
 @Component({
   selector: 'app-register',
@@ -30,11 +31,21 @@ export class RegisterComponent implements OnInit {
   //
   passwords: FormGroup;
 
+  preSelectedQuestions: string[] = [
+    'Where were you born?',
+    'What is your mother\'s maiden name?',
+    'What is your pet\'s name?',
+    'What is your favorite color?',
+    'What is your father\'s middle name?',
+    'What was your favorite school subject?',
+    'What is your favorite food?',
+  ];
+
   constructor(
     private router: Router,
     private cookieService: CookieService,
     private fb: FormBuilder,
-    private registerService: RegisterService // public abstractControl: AbstractControl
+    private securityService: SecurityService
   ) {
     console.log(this.cookieService.get(COOKIE_KEYS.USER_ID));
   }
@@ -64,17 +75,33 @@ export class RegisterComponent implements OnInit {
       phoneNumber: [
         '',
         Validators.compose([
-          Validators.required,
+          // Validators.required,
           Validators.pattern('^[0-9]{3}-[0-9]{3}-[0-9]{4}$'),
         ]),
       ],
       address: [
         '',
         Validators.compose([
-          Validators.required,
+          // Validators.required,
           Validators.pattern('^[a-zA-Z0-9]+$'),
         ]),
       ],
+      questionOne: [
+        '',
+        Validators.required
+      ],
+      answerOne: [
+        '',
+        Validators.required
+      ],
+      questionTwo: [
+        '',
+        Validators.required
+      ],
+      answerTwo: [
+        '',
+        Validators.required
+      ]
 
       //^?
       // this feature is under construction
@@ -118,20 +145,31 @@ export class RegisterComponent implements OnInit {
     if (password !== confirmPassword) {
       this.errorMessage = 'Passwords do not match';
     } else {
-      console.log(formValues);
-      this.registerService
-        .register(
-          formValues.firstName,
-          formValues.lastName,
-          formValues.email,
-          formValues.password,
-          // formValues.confirmPassword,
-          formValues.phoneNumber,
-          formValues.address
-        )
+
+      const request: AddUserRequest = {
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        email: formValues.email,
+        password: formValues.password,
+        phoneNumber: formValues.phoneNumber,
+        address: formValues.address,
+        role: 'standard',
+        securityQuestions: [
+          {
+            question: formValues.questionOne,
+            answer: formValues.answerOne
+          },
+          {
+            question: formValues.questionTwo,
+            answer: formValues.answerTwo
+          }
+        ]
+      };
+
+      this.securityService.registerUser(request)
         .subscribe({
-          next: (employee) => {
-            this.router.navigate(['profile']);
+          next: () => {
+            this.router.navigate(['/security/sign-in']);
           },
           error(err) {
             console.log(err);

@@ -9,11 +9,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SignInService } from '../sign-in/sign-in.service';
 import { MatStepper } from '@angular/material/stepper';
 import { SecurityQuestionResponse } from 'src/app/models/security-question';
 import { VerifyQuestionRequest } from 'src/app/models/verify-question';
 import { ResetPasswordRequest } from 'src/app/models/reset-password';
+import { SecurityService } from '../security.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -35,7 +35,7 @@ export class ResetPasswordComponent implements OnInit{
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private signInService: SignInService
+    private securityService: SecurityService
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +66,7 @@ export class ResetPasswordComponent implements OnInit{
   onSubmit() {
     const formValues = this.resetForm.value;
 
-    this.signInService.getSecurityQuestions(formValues.email).subscribe((questions) => {
+    this.securityService.getSecurityQuestions(formValues.email).subscribe((questions) => {
       this.buildQuestionsForm(questions, formValues.email);
       this.apiError = '';
       this.resetPasswordStepper.next();
@@ -94,7 +94,7 @@ export class ResetPasswordComponent implements OnInit{
       });
     }
 
-    this.signInService.verifySecurityQuestions(this.email, questionRequests).subscribe((res) => {
+    this.securityService.verifySecurityQuestions(this.email, questionRequests).subscribe((res) => {
       this.apiError = '';
       this.resetPasswordStepper.next();
     },
@@ -111,7 +111,7 @@ export class ResetPasswordComponent implements OnInit{
       password: formValues.password
     };
 
-    this.signInService.resetPassword(this.email, request).subscribe((res) => {
+    this.securityService.resetPassword(this.email, request).subscribe((res) => {
       this.router.navigate(['/security/sign-in']);
     },
     (err) => {

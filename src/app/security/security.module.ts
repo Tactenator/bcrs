@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -36,6 +37,7 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     MatIconModule,
     MatStepperModule,
+    MatSelectModule,
     SecurityRoutingModule
   ]
 })
