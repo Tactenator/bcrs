@@ -109,14 +109,14 @@ router.get('/users', async (req,res) => {
 /**
  * findUserById
  * @openapi
- * /api/users/{userId}:
+ * /api/users/{_id}:
  *   get:
  *     tags:
  *       - Users
  *     description: Returns a specific user designated by the user input. The user is retrieved by grabbing an id from the url parameters.
  *     summary: Returns the data for a specific user.
  *     parameters:
- *       - name: userId
+ *       - name: _id
  *         in: path
  *         required: true
  *         description: Id of the user to update.
@@ -133,10 +133,10 @@ router.get('/users', async (req,res) => {
  *         description: "Server exceptions"
  */
 
-router.get('/users/:userId', async (req, res) => {
+router.get('/users/:_id', async (req, res) => {
 
     //searches for user based on the id variable.
-    const user = await User.findById(req.params.userId)
+    const user = await User.findById(req.params._id)
 
     if(!user)
     {
@@ -150,7 +150,7 @@ router.get('/users/:userId', async (req, res) => {
 /**
  * updateUser
  * @openapi
- * /api/users/{userId}/:
+ * /api/users/{_id}/:
  *   put:
  *     tags:
  *       - Users
@@ -158,7 +158,7 @@ router.get('/users/:userId', async (req, res) => {
  *     description: Updates an existing user document
  *     summary: Updates the information of tasks of an employee
  *     parameters:
- *       - name: userId
+ *       - name: _id
  *         in: path
  *         required: true
  *         description: Id of the user to update.
@@ -207,10 +207,10 @@ router.get('/users/:userId', async (req, res) => {
  *         description: MongoDB Exception
  */
 
-router.put('/users/:userId', async (req, res) => {
+router.put('/users/:_id', async (req, res) => {
     try{
         //Searches for user from the user database
-        const user = await User.findById(req.params.userId);
+        const user = await User.findById(req.params._id);
         //if no user exists, throws an error
         if(!user){
             res.status(401).json({ error: 'Invalid user Id'})
@@ -243,14 +243,14 @@ router.put('/users/:userId', async (req, res) => {
 /**
  * deleteUser
  * @openapi
- * /api/users/{userId}:
+ * /api/users/{_id}:
  *   delete:
  *     summary: Delete a user by ID for a specific user.
  *     tags:
  *       - Users
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: _id
  *         description: User ID
  *         required: true
  *         schema:
@@ -267,10 +267,10 @@ router.put('/users/:userId', async (req, res) => {
  */
 
 // Delete a user by id only if is needed, the requirement is to disable the user
-router.delete("/users/:userId", async (req, res, next) => {
+router.delete("/users/:_id", async (req, res, next) => {
   try{
     //Searches for user from the user database
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params._id);
     //if no user exists, throws an error
     if(!user){
       res.status(404).json({ error: 'Not Found.'})

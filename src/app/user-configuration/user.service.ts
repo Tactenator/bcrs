@@ -28,8 +28,8 @@ export class UserService {
       );
   }
 
-  getUser(userId: string): Observable<User> {
-    return this.http.get<User>(`${this.userApiUrl}/${userId}`);
+  getUser(_id: string): Observable<User> {
+    return this.http.get<User>(`${this.userApiUrl}/${_id}`);
   }
 
   addUser(user: AddUserRequest): Observable<User> {
