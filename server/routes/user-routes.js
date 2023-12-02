@@ -63,7 +63,7 @@ router.post('/users', async (req,res) => {
 
     try{
         //creates a new customer. Checks to see if all parameters are met
-        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled: false, userId, role })
+        const newUser = await User.create({ email, password, firstName, lastName, phoneNumber, address, isDisabled: false, userId, role: 'standard' })
         if(!newUser){
             //if all parameters are not met, throws an error
             res.status(500).send( { 'message': `MongoDB Exception 501`})
