@@ -76,12 +76,12 @@ const router = express.Router();
  *       '501':
  *         description: MongoDB Exception
  */
-router.post('/invoices/:username', async (req, res) => {
+router.post('/invoices/:email', async (req, res) => {
 
     try{
-       
         //if a user is found, a new invoice object is created and initialized with the req.body values
         const invoice = {
+            username: req.params.username,
             email: req.body.subtotal,
             fullName: req.body.tax,
             dateCreated: req.body.dateCreated,
@@ -93,7 +93,7 @@ router.post('/invoices/:username', async (req, res) => {
             lineItems: req.body.lineItems
         }   
         
-        
+
         const newInvoice = Invoice.create(invoice)
         res.status(200).json(newInvoice)
         
