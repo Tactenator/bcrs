@@ -21,6 +21,7 @@ export class BaseNavComponent {
 
   isLoggedIn$ = this.securityService.isLoggedIn$;
   role$ = this.securityService.role$;
+  currentFirstName$ = this.securityService.currentFirstName$;
 
   constructor(
     private router: Router,

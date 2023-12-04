@@ -16,7 +16,11 @@
       </ng-container>
 
       <ng-container *ngIf="(isLoggedIn$ | async) as isLoggedIn; else loggedOut">
-        <button mat-button (click)="signOut()">Sign Out<mat-icon>account_circle</mat-icon></button>
+        <button mat-button [matMenuTriggerFor]="accountMenu">Hello {{ currentFirstName$ | async }}</button>
+        <mat-menu #accountMenu="matMenu">
+          <button mat-menu-item routerLink="/profile">Profile<mat-icon>account_circle</mat-icon></button>
+          <button mat-menu-item (click)="signOut()">Sign Out<mat-icon>logout</mat-icon></button>
+        </mat-menu>
       </ng-container>
       <ng-template #loggedOut>
         <button mat-button routerLink="/security/sign-in">Sign In<mat-icon>account_circle</mat-icon></button>
