@@ -8,6 +8,7 @@
 const express = require('express')
 const User = require('../models/user-model')
 const Invoice = require('../models/invoice-model')
+// const { mongo } = require("../utils/mongo");
 const mongoose = require('mongoose')
 
 const router = express.Router();
@@ -123,34 +124,34 @@ router.post('/invoices/:email', async (req, res) => {
  */
 router.get('/invoices/purchases-graph', async (req,res) => {
 
-    try {
-        mongo(async (db) => {
-            const aggregationPipeline = [
-              { $unwind: "$lineItems" },
-              {
-                $group: {
-                  _id: {
-                    title: "$lineItems.title",
-                    price: "$lineItems.price",
-                    name: "$lineItems.name",
-                  },
-                  count: { $sum: 1 },
-                },
-              },
-              { $sort: { "_id.title": 1 } },
-            ];
+    // try {
+    //     mongo(async (db) => {
+    //         const aggregationPipeline = [
+    //           { $unwind: "$lineItems" },
+    //           {
+    //             $group: {
+    //               _id: {
+    //                 title: "$lineItems.title",
+    //                 price: "$lineItems.price",
+    //                 name: "$lineItems.name",
+    //               },
+    //               count: { $sum: 1 },
+    //             },
+    //           },
+    //           { $sort: { "_id.title": 1 } },
+    //         ];
       
-            const result = await db
-              .collection("invoices")
-              .aggregate(aggregationPipeline)
-              .toArray();
+    //         const result = await db
+    //           .collection("invoices")
+    //           .aggregate(aggregationPipeline)
+    //           .toArray();
       
-            res.status(200).json(result);
-          });
-        }
-        catch(error) {
-            res.status(500).send({ 'message': `Server Exception: ${error.message} `})
-        }
+    //         res.status(200).json(result);
+    //       });
+    //     }
+    //     catch(error) {
+    //         res.status(500).send({ 'message': `Server Exception: ${error.message} `})
+    //     }
     
 })
 
