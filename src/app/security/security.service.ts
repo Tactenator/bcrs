@@ -20,9 +20,13 @@ export class SecurityService {
   private _role = new BehaviorSubject<string>('');
   role$: Observable<string> = this._role.asObservable();
 
+  private _currentFirstName = new BehaviorSubject<string>('');
+  currentFirstName$: Observable<string> = this._currentFirstName.asObservable();
+
   constructor(private http: HttpClient, private cookieService: CookieService) {
-     this._isLoggedIn.next(this.cookieService.check(COOKIE_KEYS.USER_ID));
-     this._role.next(this.cookieService.get(COOKIE_KEYS.ROLE));
+    this._isLoggedIn.next(this.cookieService.check(COOKIE_KEYS.USER_ID));
+    this._role.next(this.cookieService.get(COOKIE_KEYS.ROLE));
+    this._currentFirstName.next(this.cookieService.get(COOKIE_KEYS.NAME));
   }
 
   signIn(email: string, password: string) {
@@ -34,6 +38,7 @@ export class SecurityService {
           this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
           this._role.next(user.role);
           this._isLoggedIn.next(true);
+          this._currentFirstName.next(user.firstName);
           return user;
         })
       );
@@ -58,6 +63,7 @@ export class SecurityService {
   signOut() {
     this._role.next('');
     this._isLoggedIn.next(false);
+    this._currentFirstName.next('');
     this.cookieService.deleteAll();
   }
 }
