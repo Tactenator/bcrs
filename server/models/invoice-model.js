@@ -6,7 +6,6 @@
     Description: Initializes the invoice schema
 */
 
-const { stringToKeyValue } = require('@angular/flex-layout/extended/style/style-transforms');
 const mongoose = require('mongoose');
 
 const lineItemsSchema = new mongoose.Schema({
@@ -26,7 +25,7 @@ const invoiceSchema = new mongoose.Schema({
         type: String
     },
     "lastName": {
-        type: string
+        type: String
     },
     "lineItems": {
         type: [lineItemsSchema]

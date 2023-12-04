@@ -79,11 +79,10 @@ const router = express.Router();
 router.post('/invoices/:email', async (req, res) => {
 
     try{
-        //if a user is found, a new invoice object is created and initialized with the req.body values
         const invoice = {
-            username: req.params.username,
-            email: req.body.subtotal,
-            fullName: req.body.tax,
+            email: req.params.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             dateCreated: req.body.dateCreated,
             partsAmount: req.body.partsAmount, 
             laborAmount: req.body.laborAmount, 
@@ -94,7 +93,7 @@ router.post('/invoices/:email', async (req, res) => {
         }   
         
 
-        const newInvoice = Invoice.create(invoice)
+        const newInvoice = await Invoice.create(invoice)
         res.status(200).json(newInvoice)
         
     }
