@@ -46,6 +46,7 @@ import { FaqComponent } from './faq/faq.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatStepperModule } from '@angular/material/stepper';
+import { ServiceManagementComponent } from './service-management/service-management.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -64,6 +65,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     UserCreateComponent,
     EmployeeDirectoryComponent,
     FaqComponent,
+    ServiceManagementComponent,
   ],
   imports: [
     BrowserModule,
