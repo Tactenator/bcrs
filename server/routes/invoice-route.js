@@ -79,34 +79,24 @@ const router = express.Router();
 router.post('/invoices/:username', async (req, res) => {
 
     try{
-        // searches for a user based on the parameters written by the user
-        const user = await User.findOne({ 'username': req.params.username })
-
-        if(!user){
-            // if no user is found, throws an error
-            res.status(501).send({ 'message': 'MongoDB Exception'})
-        }
-        else
-        {
-            //if a user is found, a new invoice object is created and initialized with the req.body values
-            const newInvoice = {
-                email: req.body.subtotal,
-                fullName: req.body.tax,
-                dateCreated: req.body.dateCreated,
-                partsAmount: req.body.partsAmount, 
-                laborAmount: req.body.laborAmount, 
-                lineItemTotal: req.body.lineItemTotal, 
-                invoiceTotal: req.body.invoiceTotal, 
-                orderDate: req.body.orderDate, 
-                lineItems: req.body.lineItems
-            }   
-            // pushes the new object into an array already placed in the user's data
-            user.invoice.push(newInvoice)
-            
-            //saves the new data to the database
-            user.save()
-            res.status(200).json(user)
-        }
+       
+        //if a user is found, a new invoice object is created and initialized with the req.body values
+        const invoice = {
+            email: req.body.subtotal,
+            fullName: req.body.tax,
+            dateCreated: req.body.dateCreated,
+            partsAmount: req.body.partsAmount, 
+            laborAmount: req.body.laborAmount, 
+            lineItemTotal: req.body.lineItemTotal, 
+            invoiceTotal: req.body.invoiceTotal, 
+            orderDate: req.body.orderDate, 
+            lineItems: req.body.lineItems
+        }   
+        
+        
+        const newInvoice = Invoice.create(invoice)
+        res.status(200).json(newInvoice)
+        
     }
     catch (error) {
         //if unsuccessful, throws an error
