@@ -22,6 +22,7 @@ app.use(morgan('dev'));
 
 const userRoutes = require('./routes/user-routes')
 const securityRoutes = require('./routes/security-route')
+const invoiceRoutes = require('./routes/invoice-route')
 
 const options = {
   definition: {
@@ -53,6 +54,7 @@ app.use('/', express.static(path.join(__dirname, '../dist/bcrs')))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api', userRoutes)
 app.use('/api', securityRoutes)
+app.use('/api', invoiceRoutes)
 
 // error handler for 404 errors
 app.use(function(req, res, next) {
