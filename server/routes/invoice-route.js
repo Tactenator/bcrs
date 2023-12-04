@@ -7,6 +7,7 @@
 
 const express = require('express')
 const User = require('../models/user-model')
+const Invoice = require('../models/invoice-model')
 const mongoose = require('mongoose')
 
 const router = express.Router();
@@ -100,7 +101,7 @@ router.post('/invoices/:username', async (req, res) => {
                 lineItems: req.body.lineItems
             }   
             // pushes the new object into an array already placed in the user's data
-            user.invoices.push(newInvoice)
+            user.invoice.push(newInvoice)
             
             //saves the new data to the database
             user.save()
@@ -134,22 +135,40 @@ router.post('/invoices/:username', async (req, res) => {
 router.get('/invoices/purchases-graph', async (req,res) => {
 
     try {
-        //searches for a user in the database
-        const customers = await Customers.findOne({ 'userName': req.params.userName })
-        if(!customers){
-            //if no user is found, throws an error
-            res.status(501).send({ 'message': 'Mongo Exception Error'})
+       const purchaseGraph = Invoice.aggregate(
+            [
+              {
+                $unwind: "$lineItems",
+              },
+              {
+                $group: {
+                  _id: {
+                    title: "$lineItems.title",
+                    price: "$lineItems.price",
+                  },
+                  count: {
+                    $sum: 1,
+                  },
+                },
+              },
+              {
+                $sort: {
+                  "_id.title": 1,
+                },
+              },
+            ]);
+
+            if(!purchaseGraph) {
+                // if no user is found, throws an error
+                res.status(501).send({ 'message': 'MongoDB Exception'})
+            }
+            
+            res.status(200).json(purchaseGraph)
         }
-        else
-        {
-            //if successful, sets status to 200 and returns the customer.
-            res.status(200).json(customers); 
+        catch(error) {
+            res.status(500).send({ 'message': `Server Exception: ${error.message} `})
         }
-    }
-    catch(e) {
-        //if unsuccessful, throws an error
-        res.status(500).send({ 'message': `Server Exception: ${e.message}`})
-    }
+    
 })
 
 module.exports = router;
