@@ -47,6 +47,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ServiceManagementComponent } from './service-management/service-management.component';
+import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
+import { ChartModule } from 'primeng/chart';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -66,6 +68,7 @@ import { ServiceManagementComponent } from './service-management/service-managem
     EmployeeDirectoryComponent,
     FaqComponent,
     ServiceManagementComponent,
+    PurchasesGraphComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +96,7 @@ import { ServiceManagementComponent } from './service-management/service-managem
     MatSortModule,
     MatExpansionModule,
     MatStepperModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent],
