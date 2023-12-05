@@ -134,7 +134,7 @@ router.get('/invoices/purchases-graph', async (req,res) => {
                   $group: {
                     _id: {
                       name: "$lineItems.name",
-                      price: "$lineItems.price",
+                      price: "$lineItems.price"
                     },
                     count: {
                       $sum: 1,
@@ -143,7 +143,7 @@ router.get('/invoices/purchases-graph', async (req,res) => {
                 },
                 {
                   $sort: {
-                    "_id.title": 1,
+                    "_id.name": 1,
                   },
                 },
               ]
