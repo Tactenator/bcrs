@@ -19,6 +19,7 @@ import { UserCreateComponent } from './user-configuration/user-create/user-creat
 import { FaqComponent } from './faq/faq.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { ServiceManagementComponent } from './service-management/service-management.component';
+import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -74,6 +75,12 @@ const routes: Routes = [
         path:'service-management',
         component: ServiceManagementComponent,
         title: 'BCRS: Services'
+      },
+      {
+        path: 'purchase-graph',
+        component: PurchasesGraphComponent,
+        title: 'BCRS: Purchases Graph',
+        canActivate: [adminGuard],
       },
       {
         path:'not-found',
