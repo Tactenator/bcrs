@@ -6,9 +6,18 @@
 ; Description: Invoice Model
 ;===========================================
 */
+
+import { Service } from "./service";
+
 export interface Invoice {
     _id?: string;
-    username: string;
-    userId: string;
-    services : Array<any>;
+    email: string;
+    firstName: string;
+    lastName: string;
+    lineItems : Service[];
+    partsAmount?: string;
+    laborAmount?: string;
+    lineItemTotal: number;
+    invoiceTotal: number;
+    orderDate: Date;
 }

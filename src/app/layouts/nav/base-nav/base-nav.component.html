@@ -10,12 +10,16 @@
       <button mat-button routerLink="/employee-directory">Employee Directory</button>
       <button mat-button routerLink="/faq">FAQs</button>
 
-      <ng-container *ngIf="role$ | async as role">
-        <button mat-button *ngIf="role === 'admin'" routerLink="user-management">User Management</button>
+
+      <ng-container *ngIf="currentUser$ | async as currentUser">
+        <button mat-button *ngIf="currentUser.role === 'admin'" routerLink="/user-management">User Management</button>
+        <button mat-button *ngIf="currentUser.role === 'standard'" routerLink="/cart">My Cart<mat-icon>shopping_cart</mat-icon></button>
       </ng-container>
 
       <ng-container *ngIf="(isLoggedIn$ | async) as isLoggedIn; else loggedOut">
-        <button mat-button [matMenuTriggerFor]="accountMenu">Hello {{ currentFirstName$ | async }}</button>
+        <ng-container *ngIf="currentUser$ | async as currentUser">
+          <button mat-button [matMenuTriggerFor]="accountMenu">Hello {{ currentUser.firstName }}</button>
+        </ng-container>
         <mat-menu #accountMenu="matMenu">
           <button mat-menu-item routerLink="/profile">Profile<mat-icon>account_circle</mat-icon></button>
           <button mat-menu-item (click)="signOut()">Sign Out<mat-icon>logout</mat-icon></button>

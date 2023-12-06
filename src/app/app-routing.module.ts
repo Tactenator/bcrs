@@ -20,6 +20,7 @@ import { FaqComponent } from './faq/faq.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { ServiceManagementComponent } from './service-management/service-management.component';
 import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
+import { CartComponent } from './cart/cart.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -75,6 +76,11 @@ const routes: Routes = [
         path:'service-management',
         component: ServiceManagementComponent,
         title: 'BCRS: Services'
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
+        title: 'BCRS: My Cart'
       },
       {
         path: 'purchase-graph',
