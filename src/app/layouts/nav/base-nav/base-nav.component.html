@@ -16,6 +16,10 @@
         <button mat-button *ngIf="currentUser.role === 'standard'" routerLink="/cart">My Cart<mat-icon>shopping_cart</mat-icon></button>
       </ng-container>
 
+      <ng-container *ngIf="role$ | async as role">
+        <button mat-button *ngIf="role === 'admin'" routerLink="purchase-graph">Purchases Chart</button>
+      </ng-container>
+
       <ng-container *ngIf="(isLoggedIn$ | async) as isLoggedIn; else loggedOut">
         <ng-container *ngIf="currentUser$ | async as currentUser">
           <button mat-button [matMenuTriggerFor]="accountMenu">Hello {{ currentUser.firstName }}</button>
