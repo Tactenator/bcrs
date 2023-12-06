@@ -3,10 +3,14 @@ import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_KEYS } from '../constants/cookie-keys';
 import { User } from '../models/user';
 import { UserService } from '../user-configuration/user.service';
-import { SecurityService } from '../security/security.service';
+import { SecurityService, SigninUser } from '../security/security.service';
 import { ProfileService } from './profile.service';
 
-export interface Profile  extends Pick<User, 'firstName' | 'lastName' | 'email' | 'address' | 'phoneNumber' | 'role'> {}
+export interface Profile
+  extends Pick<
+    User,
+    'firstName' | 'lastName' | 'email' | 'address' | 'phoneNumber' | 'role'
+  > {}
 
 @Component({
   selector: 'app-profile',
@@ -22,10 +26,12 @@ export class ProfileComponent implements OnInit {
   phoneNumber: string;
   role: string;
   test: any;
+  currentUser: SigninUser;
 
   constructor(
     private cookieService: CookieService,
-    public profileService: ProfileService
+    public profileService: ProfileService,
+    public securityService: SecurityService
   ) {}
 
   ngOnInit(): void {

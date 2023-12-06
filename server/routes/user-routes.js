@@ -147,17 +147,17 @@ router.get('/users/:_id', async (req, res) => {
     res.status(200).json(user);
 })
 
-router.get('/users/:userId', async (req, res) => {
-    const user = await User.findOne({ 'userId': req.params.userId })
-    if(!user)
-    {
-        //if there is no user with that userId, returns status 404 and a message that user can't be found
-        return res.status(404).json({error: "No user can be found"});
-    }
-    //if successful, returns user object
-    console.log(user);
-    res.status(200).json(user);
-})
+// router.get('/users/:userId', async (req, res) => {
+//     const user = await User.findOne({ 'userId': req.params.userId })
+//     if(!user)
+//     {
+//         //if there is no user with that userId, returns status 404 and a message that user can't be found
+//         return res.status(404).json({error: "No user can be found"});
+//     }
+//     //if successful, returns user object
+//     console.log(user);
+//     res.status(200).json(user);
+// })
 
 
 /**

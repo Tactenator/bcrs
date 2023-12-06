@@ -17,11 +17,16 @@
                 <div class="basic-info">
                     <h2>Basic Info</h2>
                     <ul>
-                        <li><strong>Full Name:</strong> {{firstName}} {{lastName}}</li>
-                        <li><strong>Email:</strong> john.doe@example.com</li>
-                        <li><strong>Address:</strong> 123 Main St, Cityville</li>
-                        <li><strong>Phone:</strong> (555) 123-4567</li>
-                        <!-- <li><strong>Last Signed In:</strong> January 1, 2023</li> -->
+                        <li><strong>Full Name:</strong> {{ (securityService.currentUser$ | async).firstName }} {{
+                            (securityService.currentUser$ | async).lastName
+                            }}</li>
+                        <li><strong>Email:</strong> {{ (securityService.currentUser$ | async).email }}</li>
+                        <li><strong>Address:</strong> {{ (securityService.currentUser$| async).address }}</li>
+                        <li><strong>Phone:</strong> {{ (securityService.currentUser$|async).phoneNumber }}</li>
+                        <li><strong>Last Signed In:</strong> {{ (securityService.currentUser$|async ).lastSigninDate }}
+                        </li>
+
+
                     </ul>
                 </div>
                 <div class="system-settings">

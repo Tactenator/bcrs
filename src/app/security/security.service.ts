@@ -8,10 +8,12 @@ import { COOKIE_KEYS } from '../constants/cookie-keys';
 import { SecurityQuestionResponse } from '../models/security-question';
 import { VerifyQuestionRequest } from '../models/verify-question';
 import { ResetPasswordRequest } from '../models/reset-password';
+
 import { Router } from '@angular/router';
+export type SigninUser = User & { lastSigninDate: Date | undefined };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SecurityService {
   private securityApiUrl = '/api/security';
@@ -19,8 +21,8 @@ export class SecurityService {
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
 
-  private _currentUser = new BehaviorSubject<User>(null);
-  currentUser$: Observable<User> = this._currentUser.asObservable();
+  private _currentUser = new BehaviorSubject<SigninUser>(null);
+  currentUser$: Observable<SigninUser> = this._currentUser.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -30,27 +32,25 @@ export class SecurityService {
     this._isLoggedIn.next(this.cookieService.check(COOKIE_KEYS.USER_ID));
 
     // if userId cookie present, fetch user from backend
-    if(this.cookieService.check(COOKIE_KEYS.USER_ID)) {
+    if (this.cookieService.check(COOKIE_KEYS.USER_ID)) {
       this.getUser(this.cookieService.get(COOKIE_KEYS.USER_ID)).subscribe();
     }
   }
 
   signIn(email: string, password: string) {
-    return this.http.post<User>('/api/signin/', { email, password })
-      .pipe(
-        tap((user: User) => {
-          return this.setUser(user);
-        })
-      );
+    return this.http.post<User>('/api/signin/', { email, password }).pipe(
+      tap((user) => {
+        return this.setUser({ ...user, lastSigninDate: new Date() });
+      })
+    );
   }
 
   getUser(id: string) {
-    return this.http.get<User>(`/api/users/${id}`)
-      .pipe(
-        tap((user: User) => {
-          return this.setUser(user);
-        })
-      );
+    return this.http.get<User>(`/api/users/${id}`).pipe(
+      tap((user: User) => {
+        return this.setUser({ ...user, lastSigninDate: undefined });
+      })
+    );
   }
 
   registerUser(user: AddUserRequest): Observable<User> {
@@ -58,15 +58,23 @@ export class SecurityService {
   }
 
   getSecurityQuestions(email: string) {
-    return this.http.get<SecurityQuestionResponse[]>(`/api/users/${email}/security-questions`);
+    return this.http.get<SecurityQuestionResponse[]>(
+      `/api/users/${email}/security-questions`
+    );
   }
 
   verifySecurityQuestions(email: string, request: VerifyQuestionRequest[]) {
-    return this.http.post<SecurityQuestionResponse[]>(`${this.securityApiUrl}/${email}/verify-security-questions`, request);
+    return this.http.post<SecurityQuestionResponse[]>(
+      `${this.securityApiUrl}/${email}/verify-security-questions`,
+      request
+    );
   }
 
   resetPassword(email: string, request: ResetPasswordRequest) {
-    return this.http.post<SecurityQuestionResponse[]>(`${this.securityApiUrl}/users/${email}/reset-password`, request);
+    return this.http.post<SecurityQuestionResponse[]>(
+      `${this.securityApiUrl}/users/${email}/reset-password`,
+      request
+    );
   }
 
   signOut() {
@@ -80,7 +88,7 @@ export class SecurityService {
   }
 
   // populates necessary cookies and user state of application
-  private setUser(user: User) {
+  private setUser(user: SigninUser) {
     this.cookieService.set(COOKIE_KEYS.USER_ID, user._id);
     this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
     this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
