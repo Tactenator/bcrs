@@ -8,38 +8,47 @@ import { COOKIE_KEYS } from '../constants/cookie-keys';
 import { SecurityQuestionResponse } from '../models/security-question';
 import { VerifyQuestionRequest } from '../models/verify-question';
 import { ResetPasswordRequest } from '../models/reset-password';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SecurityService {
   private securityApiUrl = '/api/security';
+
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
 
-  private _role = new BehaviorSubject<string>('');
-  role$: Observable<string> = this._role.asObservable();
+  private _currentUser = new BehaviorSubject<User>(null);
+  currentUser$: Observable<User> = this._currentUser.asObservable();
 
-  private _currentFirstName = new BehaviorSubject<string>('');
-  currentFirstName$: Observable<string> = this._currentFirstName.asObservable();
-
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
     this._isLoggedIn.next(this.cookieService.check(COOKIE_KEYS.USER_ID));
-    this._role.next(this.cookieService.get(COOKIE_KEYS.ROLE));
-    this._currentFirstName.next(this.cookieService.get(COOKIE_KEYS.NAME));
+
+    // if userId cookie present, fetch user from backend
+    if(this.cookieService.check(COOKIE_KEYS.USER_ID)) {
+      this.getUser(this.cookieService.get(COOKIE_KEYS.USER_ID)).subscribe();
+    }
   }
 
   signIn(email: string, password: string) {
     return this.http.post<User>('/api/signin/', { email, password })
       .pipe(
         tap((user: User) => {
-          this.cookieService.set(COOKIE_KEYS.USER_ID, user.userId);
-          this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
-          this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
-          this._role.next(user.role);
-          this._isLoggedIn.next(true);
-          this._currentFirstName.next(user.firstName);
-          return user;
+          return this.setUser(user);
+        })
+      );
+  }
+
+  getUser(id: string) {
+    return this.http.get<User>(`/api/users/${id}`)
+      .pipe(
+        tap((user: User) => {
+          return this.setUser(user);
         })
       );
   }
@@ -61,9 +70,22 @@ export class SecurityService {
   }
 
   signOut() {
-    this._role.next('');
     this._isLoggedIn.next(false);
-    this._currentFirstName.next('');
+    this._currentUser.next(null);
     this.cookieService.deleteAll();
+    localStorage.clear();
+    this.router.navigate(['/home']).then(() => {
+      location.reload();
+    });
+  }
+
+  // populates necessary cookies and user state of application
+  private setUser(user: User) {
+    this.cookieService.set(COOKIE_KEYS.USER_ID, user._id);
+    this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
+    this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
+    this._isLoggedIn.next(true);
+    this._currentUser.next(user);
+    return user;
   }
 }

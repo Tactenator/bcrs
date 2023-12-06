@@ -49,6 +49,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ServiceManagementComponent } from './service-management/service-management.component';
 import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
 import { ChartModule } from 'primeng/chart';
+import { CartComponent } from './cart/cart.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ChartModule } from 'primeng/chart';
     FaqComponent,
     ServiceManagementComponent,
     PurchasesGraphComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

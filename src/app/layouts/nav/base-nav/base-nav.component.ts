@@ -20,8 +20,7 @@ export class BaseNavComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isLoggedIn$ = this.securityService.isLoggedIn$;
-  role$ = this.securityService.role$;
-  currentFirstName$ = this.securityService.currentFirstName$;
+  currentUser$ = this.securityService.currentUser$;
 
   constructor(
     private router: Router,
@@ -35,6 +34,5 @@ export class BaseNavComponent {
 
   signOut() {
     this.securityService.signOut();
-    this.router.navigate(['/']);
   }
 }

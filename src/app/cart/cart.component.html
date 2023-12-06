@@ -1,0 +1,22 @@
+<mat-card>
+  <h1 style="text-align: center; color: #b71c1c; margin-bottom: 1em;">My Cart</h1>
+  <mat-card-content *ngIf="currentUser$ | async as currentUser">
+    <div class="row justify-content-around">
+      <div class="col-12 col-md-6">
+        <ng-container *ngFor="let service of selectedServices">
+          <div class="service">
+            <h4 style="color: #b71c1c;">{{ service.name }}</h4>
+            <h5>Price: {{ service.price | currency:'USD' }}</h5>
+          </div>
+        </ng-container>
+        <hr>
+        <h4 style="color: #b71c1c; padding-top: 1em;">Total: {{ total | currency:'USD' }}</h4>
+      </div>
+    </div>
+    <div class="row justify-content-around" *ngIf="selectedServices.length">
+      <div class="col-12 col-md-6">
+        <button color="accent" mat-raised-button style="width: 100%;" (click)="submitInvoice(currentUser)">Submit Invoice</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

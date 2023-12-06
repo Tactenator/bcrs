@@ -7,7 +7,10 @@
           <div class="service">
             <h4 style="color: #b71c1c;">{{ service.name }}</h4>
             <p>{{ service.description }}</p>
-            <h5 style="color: #FFB300;">Price: {{ service.price | currency:'USD' }}</h5>
+            <h5>Price: {{ service.price | currency:'USD' }}</h5>
+            <ng-container *ngIf="currentUser$ | async as currentUser">
+              <button mat-button color="accent" [disabled]="!(currentUser.role === 'standard')" (click)="addToCart(service.id)">Add to Cart<mat-icon>add_shopping_cart</mat-icon></button>
+            </ng-container>
           </div>
         </ng-container>
       </div>
