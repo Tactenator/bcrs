@@ -16,14 +16,14 @@ const router = express.Router();
 /**
  * createInvoice
  * @openapi
- * /api/invoices/{username}
+ * /api/invoices/{email}:
  *   post:
  *     tags:
  *       - Invoice
  *     name: createInvoice
  *     summary: Creates a new invoice based on the username
  *     parameters:
- *      - name: userName
+ *      - name: email
  *        in: path
  *        required: true
  *        description: Username that belongs to the invoice 
@@ -46,7 +46,9 @@ const router = express.Router();
  *             properties:
  *               email:
  *                 type: string
- *               fullName:
+ *               firstName:
+ *                 type: string
+ *               lastName: 
  *                 type: string
  *               dateCreated:
  *                 type: string
@@ -77,6 +79,7 @@ const router = express.Router();
  *       '501':
  *         description: MongoDB Exception
  */
+
 router.post('/invoices/:email', async (req, res) => {
 
     try{
@@ -107,7 +110,7 @@ router.post('/invoices/:email', async (req, res) => {
 /**
  * findPurchasesByService
  * @openapi
- * /api/invoices/purchases-graph
+ * /api/invoices/purchases-graph:
  *   get:
  *     tags:
  *       - Invoice
@@ -122,6 +125,8 @@ router.post('/invoices/:email', async (req, res) => {
  *       '501':
  *         description: "MongoDB exceptions"
  */
+
+
 router.get('/invoices/purchases-graph', async (req,res) => {
 
     try {
