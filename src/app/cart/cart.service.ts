@@ -8,7 +8,8 @@
 import { Injectable } from '@angular/core';
 import { Service } from '../models/service';
 import { Invoice } from '../models/invoice';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
+import { InvoiceService } from '../printable-invoice/invoice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class CartService {
   selectedServices: Service[] = [];
   total: number = 0;
 
-  constructor() {
+  constructor(private invoiceService: InvoiceService) {
     this.selectedServices = JSON.parse(localStorage.getItem('cart') || '[]');
     // creates total based on array
     this.total = this.calculateTotal(this.selectedServices);
@@ -79,9 +80,8 @@ export class CartService {
   }
 
   // this needs to be edited once backend and invoice summary is completed
-  submitInvoice(invoice: Invoice) {
-    // integrate backend
-    return of({})
+  submitInvoice(invoice: Invoice): Observable<any> {
+    return this.invoiceService.submitInvoice(invoice.email, invoice);
   }
 
   private calculateTotal(selectedServices: Service[]) {

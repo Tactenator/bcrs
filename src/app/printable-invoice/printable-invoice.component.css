@@ -1,0 +1,28 @@
+.invoice {
+  width: 60%;
+  margin: auto auto;
+  padding: 10%;
+  border: 1pt solid black;
+}
+
+table {
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+.price-header {
+  text-align: right;
+}
+
+.price-cell {
+  text-align: right;
+}
+
+.total {
+  text-align: right;
+}
+

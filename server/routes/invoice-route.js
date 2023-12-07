@@ -26,8 +26,8 @@ const router = express.Router();
  *      - name: email
  *        in: path
  *        required: true
- *        description: Username that belongs to the invoice 
- *        schema: 
+ *        description: Username that belongs to the invoice
+ *        schema:
  *          type: string
  *     requestBody:
  *       description: Information about the person
@@ -48,19 +48,19 @@ const router = express.Router();
  *                 type: string
  *               firstName:
  *                 type: string
- *               lastName: 
+ *               lastName:
  *                 type: string
  *               dateCreated:
  *                 type: string
- *               partsAmount: 
+ *               partsAmount:
  *                 type: string
- *               laborAmount: 
+ *               laborAmount:
  *                 type: string
  *               lineItemTotal:
  *                 type: string
  *               invoiceTotal:
  *                 type: string
- *               orderDate: 
+ *               orderDate:
  *                 type: string
  *               lineItems:
  *                 type: array
@@ -88,24 +88,72 @@ router.post('/invoices/:email', async (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             dateCreated: req.body.dateCreated,
-            partsAmount: req.body.partsAmount, 
-            laborAmount: req.body.laborAmount, 
-            lineItemTotal: req.body.lineItemTotal, 
-            invoiceTotal: req.body.invoiceTotal, 
-            orderDate: req.body.orderDate, 
+            partsAmount: req.body.partsAmount,
+            laborAmount: req.body.laborAmount,
+            lineItemTotal: req.body.lineItemTotal,
+            invoiceTotal: req.body.invoiceTotal,
+            orderDate: req.body.orderDate,
             lineItems: req.body.lineItems
-        }   
-        
+        }
+
 
         const newInvoice = await Invoice.create(invoice)
         res.status(200).json(newInvoice)
-        
+
     }
     catch (error) {
         //if unsuccessful, throws an error
         res.status(500).send({ 'message': `Server Exception: ${error.message} `})
     }
 })
+
+/**
+ * findInvoiceByEmail
+ * @openapi
+ * /api/invoice/{email}:
+ *   get:
+ *     tags:
+ *       - Invoice
+ *     description: Returns a specific invoice designated by the user email. The email is retrieved by grabbing an email from the url parameters.
+ *     summary: Returns the invoice for a specific user.
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *         required: true
+ *         description: email of the user.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: "Successful retrieval of the last Invoice from the user"
+ *       '400':
+ *         description: "Bad Request"
+ *       '404':
+ *         description: "Not Found"
+ *       '500':
+ *         description: "Server exceptions"
+ */
+
+router.get('/invoices/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    // Use the find method to retrieve invoices by email
+    const invoices = await Invoice.find({ email });
+
+    if (invoices.length === 0) {
+      // If no invoices are found, return a 404 status
+      res.status(404).json({ message: 'No invoices found for the provided email.' });
+    } else {
+
+      res.status(200).json(invoices);
+    }
+  } catch (error) {
+
+    res.status(500).json({ message: `Server Exception: ${error.message}` });
+  }
+});
+
 
 /**
  * findPurchasesByService

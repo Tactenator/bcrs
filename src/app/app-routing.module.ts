@@ -21,6 +21,7 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
 import { ServiceManagementComponent } from './service-management/service-management.component';
 import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
 import { CartComponent } from './cart/cart.component';
+import { PrintableInvoiceComponent } from './printable-invoice/printable-invoice.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -81,6 +82,11 @@ const routes: Routes = [
         path: 'cart',
         component: CartComponent,
         title: 'BCRS: My Cart'
+      },
+      {
+        path: 'printable-invoice/:email',
+        component: PrintableInvoiceComponent,
+        title: 'BCRS: Invoice'
       },
       {
         path: 'purchase-graph',

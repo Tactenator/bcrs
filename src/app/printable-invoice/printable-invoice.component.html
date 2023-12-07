@@ -1,0 +1,24 @@
+<div *ngIf="invoice" class="invoice">
+  <h2 style="text-decoration: underline; color: #b71c1c;">Invoice</h2>
+  <p>Email: {{ invoice.email }}</p>
+  <p>Name: {{ invoice.firstName }} {{ invoice.lastName }}</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th class="price-header">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoice.lineItems">
+        <td>{{ item.name }}</td>
+        <td class="price-cell">{{ item.price | currency:'USD' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br><hr>
+  <p class="total">Total: {{ invoice.invoiceTotal | currency:'USD' }}</p>
+  <!-- Add more details as needed -->
+  <br><br>
+  <button>Print</button>
+</div>

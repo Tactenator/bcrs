@@ -11,6 +11,8 @@ import { Service } from '../models/service';
 import { Invoice } from '../models/invoice';
 import { SecurityService } from '../security/security.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-cart',
@@ -25,7 +27,8 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
-    private securityService: SecurityService
+    private securityService: SecurityService,
+    private router: Router
   ) {}
 
   submitInvoice(user: User) {
@@ -41,6 +44,24 @@ export class CartComponent {
       orderDate: new Date()
     }
 
-    this.cartService.submitInvoice(invoice).subscribe();
+    this.cartService.submitInvoice(invoice).subscribe(
+      (response) => {
+        console.log('Invoice submitted successfully:', response);
+
+        this.showPrintableInvoice = true;
+
+        // Assign the response to the 'invoice' property
+        this.invoice = response;
+
+        // Navigate to the printable invoice route
+        this.router.navigate(['/printable-invoice', user.email]);
+      },
+      (error) => {
+        console.error('Error submitting invoice:', error);
+        // Handle errors
+      }
+    );
   }
+  invoice: Invoice;
+  showPrintableInvoice = false;
 }
