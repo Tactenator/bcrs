@@ -1,6 +1,6 @@
 <div *ngIf="invoice" class="invoice">
   <img src="../../assets/logo.png" style="width: 35%;">
-  <br><br>
+  <br><br><br><br>
   <h2 style="text-decoration: underline; color: #b71c1c;">Invoice</h2>
   <p>Email: {{ invoice.email }}</p>
   <p>Name: {{ invoice.firstName }} {{ invoice.lastName }}</p>
@@ -23,5 +23,5 @@
   <br><hr>
   <p class="total">Total: {{ invoice.invoiceTotal | currency:'USD' }}</p>
   <br><br>
-  <button>Print</button>
+  <button (click)="printInvoice()">Print</button>
 </div>

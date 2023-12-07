@@ -18,8 +18,6 @@ export class PrintableInvoiceComponent implements OnInit{
     this.email = this.route.snapshot.params['email'];
     console.log('Email:', this.email);
 
-
-
     this.invoiceService.getInvoiceByEmail(this.email).subscribe(
       (data) => {
         console.log('Fetched invoice data:', data);
@@ -30,5 +28,9 @@ export class PrintableInvoiceComponent implements OnInit{
         console.error('Error fetching invoice data:', error);
       }
     );
+  }
+
+  printInvoice() {
+    window.print();
   }
 }
