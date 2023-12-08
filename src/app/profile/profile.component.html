@@ -1,52 +1,51 @@
 <!--
  * Title: profile.component.html
  * Author: Group 1 - Trevor McLaurine, William Austin, Tiffany Reyes, Patrick Cuauro
- * Description: profile page with user information 
+ * Description: profile page with user information
  * Date: 12/5/2023
 -->
-<div class="profile-container">
-    <div class="mat-elevation-z8 profile">
-        <mat-card>
-            <mat-card-title>
-                <h1>User Profile</h1>
-            </mat-card-title>
-            <mat-card-content>
-                <!-- <div class="profile-picture">
-                    <img src="profile-picture.jpg" alt="Profile Picture">
-                </div> -->
-                <div class="basic-info">
-                    <h2>Basic Info</h2>
-                    <ul>
-                        <li><strong>Full Name:</strong> {{ (securityService.currentUser$ | async).firstName }} {{
-                            (securityService.currentUser$ | async).lastName
-                            }}</li>
-                        <li><strong>Email:</strong> {{ (securityService.currentUser$ | async).email }}</li>
-                        <li><strong>Address:</strong> {{ (securityService.currentUser$| async).address }}</li>
-                        <li><strong>Phone:</strong> {{ (securityService.currentUser$|async).phoneNumber }}</li>
-                        <li><strong>Last Signed In:</strong> {{ (securityService.currentUser$|async ).lastSigninDate }}
-                        </li>
-
-
-                    </ul>
-                </div>
-                <div class="system-settings">
-                    <h2>System Settings</h2>
-                    <ul>
-                        <li><strong>Language:</strong> English</li>
-                        <li><strong>Privacy Settings:</strong> {{role}}</li>
-                    </ul>
-                </div>
-                <div class="features">
-                    <button mat-icon-button color="primary" aria-label="invoices-button"
-                        routerLink="invoice">Invoices</button>
-                    <br>
-                    <button mat-icon-button color="primary" aria-label="order-button" routerLink="#">Orders</button>
-                    <br>
-                    <button mat-icon-button color="primary" aria-label="edit button" routerLink="/services">Services
-                        <!-- <mat-icon>edit</mat-icon> -->
-                    </button>
-                </div>
-            </mat-card-content>
-        </mat-card>
+<mat-card>
+  <mat-card-title>
+      <h1 class="header">User Profile</h1>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="profile-picture">
+      <img src="assets/profile.png" alt="Profile Picture">
     </div>
-</div>
+
+    <div class="row justify-content-around">
+      <div class="col-12 col-md-6">
+        <h2 style="color: #B71C1C;">Basic Info</h2>
+          <ul>
+            <li><strong>Full Name:</strong> {{ (securityService.currentUser$ | async).firstName }} {{ (securityService.currentUser$ | async).lastName }}</li>
+            <li><strong>Email:</strong> {{ (securityService.currentUser$ | async).email }}</li>
+            <li><strong>Address:</strong> {{ (securityService.currentUser$| async).address }}</li>
+            <li><strong>Phone:</strong> {{ (securityService.currentUser$|async).phoneNumber }}</li>
+            <li><strong>Last Signed In:</strong> {{ (securityService.currentUser$|async ).lastSigninDate }}</li>
+          </ul>
+      </div>
+      <div class="col-12 col-md-6">
+        <h2 style="color: #B71C1C;">System Settings</h2>
+          <ul>
+            <li><strong>Language:</strong> English</li>
+            <li><strong>Privacy Settings:</strong> {{role}}</li>
+          </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <button mat-raised-button color="accent" aria-label="invoices-button" routerLink="invoice">Invoices</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <button mat-raised-button color="accent" aria-label="order-button" routerLink="#">Orders</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <button mat-raised-button color="accent" aria-label="edit button" routerLink="/services">Services</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
