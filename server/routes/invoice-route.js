@@ -16,7 +16,7 @@ const router = express.Router();
 /**
  * createInvoice
  * @openapi
- * /api/invoices/{email}:
+ * /api/invoice/{email}:
  *   post:
  *     tags:
  *       - Invoice
@@ -80,7 +80,7 @@ const router = express.Router();
  *         description: MongoDB Exception
  */
 
-router.post('/invoices/:email', async (req, res) => {
+router.post('/invoice/:email', async (req, res) => {
 
     try{
         const invoice = {
@@ -134,7 +134,7 @@ router.post('/invoices/:email', async (req, res) => {
  *         description: "Server exceptions"
  */
 
-router.get('/invoices/:email', async (req, res) => {
+router.get('/invoice/:email', async (req, res) => {
   try {
     const email = req.params.email;
 

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InvoiceService {
-  private baseUrl = '/api/invoices'; // Update the URL as needed
+  private baseUrl = '/api/invoice'; // Update the URL as needed
 
   constructor(private http: HttpClient) {}
 
