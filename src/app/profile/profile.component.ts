@@ -21,6 +21,5 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.cookieService.get(COOKIE_KEYS.ROLE);
-    // this.address = this.profileService.identifier;
   }
 }
