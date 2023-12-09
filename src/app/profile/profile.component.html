@@ -16,12 +16,12 @@
     <div class="row justify-content-around">
       <div class="col-12 col-md-6">
         <h2 style="color: #B71C1C;">Basic Info</h2>
-          <ul>
-            <li><strong>Full Name:</strong> {{ (securityService.currentUser$ | async).firstName }} {{ (securityService.currentUser$ | async).lastName }}</li>
-            <li><strong>Email:</strong> {{ (securityService.currentUser$ | async).email }}</li>
-            <li><strong>Address:</strong> {{ (securityService.currentUser$| async).address }}</li>
-            <li><strong>Phone:</strong> {{ (securityService.currentUser$|async).phoneNumber }}</li>
-            <li><strong>Last Signed In:</strong> {{ (securityService.currentUser$|async ).lastSigninDate }}</li>
+          <ul *ngIf="currentUser$ | async as currentUser">
+            <li><strong>Full Name:</strong> {{ currentUser.firstName }} {{ currentUser.lastName }}</li>
+            <li><strong>Email:</strong> {{ currentUser.email }}</li>
+            <li><strong>Address:</strong> {{ currentUser.address }}</li>
+            <li><strong>Phone:</strong> {{ currentUser.phoneNumber }}</li>
+            <li><strong>Last Signed In:</strong> {{ currentUser.lastSignInDate | date:'medium' }}</li>
           </ul>
       </div>
       <div class="col-12 col-md-6">
@@ -32,20 +32,17 @@
           </ul>
       </div>
     </div>
-    <div class="row">
-      <!-- <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
-        <button mat-raised-button color="accent" aria-label="cart-button" routerLink="/cart">Cart</button>
-      </div> -->
-    </div>
-    <div class="row">
-      <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
-        <button mat-raised-button color="accent" aria-label="services-button" routerLink="/service-management">Services</button>
+    <ng-container *ngIf="role !== 'Admin'">
+      <div class="row">
+        <div  class="col-12 col-md-6">
+          <button mat-raised-button color="accent" aria-label="services-button" routerLink="/service-management">Services</button>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
-        <button mat-raised-button color="accent" aria-label="invoice-button" routerLink="/cart">Invoice</button>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <button mat-raised-button color="accent" aria-label="invoice-button" routerLink="/cart">Invoice</button>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </mat-card-content>
 </mat-card>

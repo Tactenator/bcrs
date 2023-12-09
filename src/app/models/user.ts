@@ -21,5 +21,6 @@ export interface User {
   selectedSecurityQuestions?: {
     questionText: string,
     answerText: string
-  } []
+  } [],
+  lastSignInDate?: Date
 }

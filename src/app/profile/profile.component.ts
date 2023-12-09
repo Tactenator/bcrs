@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { COOKIE_KEYS } from '../constants/cookie-keys';
 import { User } from '../models/user';
 import { UserService } from '../user-configuration/user.service';
-import { SecurityService, SigninUser } from '../security/security.service';
+import { SecurityService } from '../security/security.service';
 import { ProfileService } from './profile.service';
 
 export interface Profile
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   phoneNumber: string;
   role: string;
   test: any;
-  currentUser: SigninUser;
+  currentUser$ = this.securityService.currentUser$;
 
   constructor(
     private cookieService: CookieService,

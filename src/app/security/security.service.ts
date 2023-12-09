@@ -10,7 +10,6 @@ import { VerifyQuestionRequest } from '../models/verify-question';
 import { ResetPasswordRequest } from '../models/reset-password';
 
 import { Router } from '@angular/router';
-export type SigninUser = User & { lastSigninDate: Date | undefined };
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +20,8 @@ export class SecurityService {
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
 
-  private _currentUser = new BehaviorSubject<SigninUser>(null);
-  currentUser$: Observable<SigninUser> = this._currentUser.asObservable();
+  private _currentUser = new BehaviorSubject<User>(null);
+  currentUser$: Observable<User> = this._currentUser.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -40,7 +39,7 @@ export class SecurityService {
   signIn(email: string, password: string) {
     return this.http.post<User>('/api/signin/', { email, password }).pipe(
       tap((user) => {
-        return this.setUser({ ...user, lastSigninDate: new Date() });
+        return this.setUser({ ...user, lastSignInDate: new Date() });
       })
     );
   }
@@ -48,7 +47,12 @@ export class SecurityService {
   getUser(id: string) {
     return this.http.get<User>(`/api/users/${id}`).pipe(
       tap((user: User) => {
-        return this.setUser({ ...user, lastSigninDate: undefined });
+        let lastSignIn: Date = null;
+        if (this.cookieService.check(COOKIE_KEYS.LAST_SIGN_IN)) {
+          lastSignIn = new Date(this.cookieService.get(COOKIE_KEYS.LAST_SIGN_IN))
+        }
+
+        return this.setUser({ ...user, lastSignInDate: lastSignIn });
       })
     );
   }
@@ -88,10 +92,13 @@ export class SecurityService {
   }
 
   // populates necessary cookies and user state of application
-  private setUser(user: SigninUser) {
+  private setUser(user: User) {
     this.cookieService.set(COOKIE_KEYS.USER_ID, user._id);
     this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
     this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
+    if (user.lastSignInDate !== undefined || user.lastSignInDate !== null) {
+      this.cookieService.set(COOKIE_KEYS.LAST_SIGN_IN, user.lastSignInDate.toString());
+    }
     this._isLoggedIn.next(true);
     this._currentUser.next(user);
     return user;
