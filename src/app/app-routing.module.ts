@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { adminGuard } from './guards/admin.guard';
-import { standardGuard } from './guards/standard.guard';
 import { UserConfigurationComponent } from './user-configuration/user-configuration.component';
 import { UserEditComponent } from './user-configuration/user-edit/user-edit.component';
 import { UserCreateComponent } from './user-configuration/user-create/user-create.component';
@@ -22,6 +21,7 @@ import { ServiceManagementComponent } from './service-management/service-managem
 import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.component';
 import { CartComponent } from './cart/cart.component';
 import { PrintableInvoiceComponent } from './printable-invoice/printable-invoice.component';
+import { authGuard } from './guards/auth.guard';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -47,21 +47,22 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+        canMatch: [authGuard]
       },
       {
         path: 'user-management',
         component: UserConfigurationComponent,
-        canMatch: [adminGuard],
+        canMatch: [authGuard, adminGuard],
       },
       {
         path: 'user-management/create',
         component: UserCreateComponent,
-        canMatch: [adminGuard],
+        canMatch: [authGuard, adminGuard],
       },
       {
         path: 'user-management/:userId',
         component: UserEditComponent,
-        canMatch: [adminGuard],
+        canMatch: [authGuard, adminGuard],
       },
       {
         path: 'faq',
@@ -81,18 +82,20 @@ const routes: Routes = [
       {
         path: 'cart',
         component: CartComponent,
-        title: 'BCRS: My Cart'
+        title: 'BCRS: My Cart',
+        canMatch: [authGuard]
       },
       {
         path: 'printable-invoice/:email',
         component: PrintableInvoiceComponent,
-        title: 'BCRS: Invoice'
+        title: 'BCRS: Invoice',
+        canMatch: [authGuard]
       },
       {
         path: 'purchase-graph',
         component: PurchasesGraphComponent,
         title: 'BCRS: Purchases Graph',
-        canActivate: [adminGuard],
+        canMatch: [authGuard, adminGuard],
       },
       {
         path:'not-found',
