@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private cookieService: CookieService,
-    public securityService: SecurityService
+    private securityService: SecurityService
   ) {}
 
   ngOnInit(): void {
