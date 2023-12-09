@@ -4,6 +4,7 @@ import { COOKIE_KEYS } from '../constants/cookie-keys';
 import { User } from '../models/user';
 import { SecurityService } from '../security/security.service';
 import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,8 @@ import { Observable } from 'rxjs';
 export class ProfileComponent implements OnInit {
   role: string;
   currentUser$: Observable<User> = this.securityService.currentUser$;
+  showPhoneForm = false;
+  showAddressForm = false;
 
   constructor(
     private cookieService: CookieService,
@@ -21,5 +24,21 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.cookieService.get(COOKIE_KEYS.ROLE);
+  }
+
+  editAddress() {
+    this.showAddressForm = true;
+  }
+
+  onAddressUpdate() {
+    this.showAddressForm = false;
+  }
+
+  editPhone() {
+    this.showPhoneForm = true;
+  }
+
+  onPhoneUpdate() {
+    this.showPhoneForm = false;
   }
 }

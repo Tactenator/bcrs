@@ -1,0 +1,12 @@
+<form [formGroup]="phoneForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <mat-form-field class="col-12 col-md-6">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber">
+      <mat-hint>Enter 10 Digits w/o dashes</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <button mat-raised-button color="primary" class="col-12 col-md-6" type="submit" [disabled]="!phoneForm.valid">Update Phone</button>
+  </div>
+</form>

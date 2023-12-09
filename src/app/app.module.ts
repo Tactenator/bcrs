@@ -51,6 +51,8 @@ import { PurchasesGraphComponent } from './purchase-graph/purchase-graph.compone
 import { ChartModule } from 'primeng/chart';
 import { CartComponent } from './cart/cart.component';
 import { PrintableInvoiceComponent } from './printable-invoice/printable-invoice.component';
+import { ProfilePhoneComponent } from './profile/profile-phone/profile-phone.component';
+import { ProfileAddressComponent } from './profile/profile-address/profile-address.component';
 //this is the http client module that we need to retrieve data from the server
 
 @NgModule({
@@ -73,6 +75,8 @@ import { PrintableInvoiceComponent } from './printable-invoice/printable-invoice
     PurchasesGraphComponent,
     CartComponent,
     PrintableInvoiceComponent,
+    ProfilePhoneComponent,
+    ProfileAddressComponent,
   ],
   imports: [
     BrowserModule,

@@ -92,11 +92,11 @@ export class SecurityService {
   }
 
   // populates necessary cookies and user state of application
-  private setUser(user: User) {
+  setUser(user: User) {
     this.cookieService.set(COOKIE_KEYS.USER_ID, user._id);
     this.cookieService.set(COOKIE_KEYS.NAME, user.firstName);
     this.cookieService.set(COOKIE_KEYS.ROLE, user.role);
-    if (user.lastSignInDate !== undefined || user.lastSignInDate !== null) {
+    if (user.lastSignInDate !== undefined && user.lastSignInDate !== null) {
       this.cookieService.set(COOKIE_KEYS.LAST_SIGN_IN, user.lastSignInDate.toString());
     }
     this._isLoggedIn.next(true);

@@ -42,7 +42,7 @@ export class UserService {
       );
   }
 
-  editUser(user: User): Observable<User> {
+  adminEditUser(user: User): Observable<User> {
     return this.http.put<User>(`${this.userApiUrl}/${user._id}`, user)
       .pipe(
         tap(updatedUser => {
@@ -57,6 +57,10 @@ export class UserService {
           this._users.next(this.users);
         })
       );
+  }
+
+  editUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.userApiUrl}/${user._id}`, user);
   }
 
   deleteUser(user: User): Observable<User> {

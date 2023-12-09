@@ -63,7 +63,7 @@ export class UserEditComponent implements OnInit {
       role: this.user.role,
     };
 
-    this.userService.editUser(updatedUser)
+    this.userService.adminEditUser(updatedUser)
       .subscribe(() => {
         this.router.navigate(['user-management']);
       });

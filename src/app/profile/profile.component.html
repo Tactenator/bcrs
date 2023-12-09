@@ -19,8 +19,30 @@
           <ul *ngIf="currentUser$ | async as currentUser">
             <li><strong>Full Name:</strong> {{ currentUser.firstName }} {{ currentUser.lastName }}</li>
             <li><strong>Email:</strong> {{ currentUser.email }}</li>
-            <li><strong>Address:</strong> {{ currentUser.address }}</li>
-            <li><strong>Phone:</strong> {{ currentUser.phoneNumber }}</li>
+            <li>
+              <strong>Address:</strong>
+              <ng-container *ngIf="showAddressForm; else userAddress">
+                <app-profile-address [user]="currentUser" (addressUpdated)="onAddressUpdate()"></app-profile-address>
+              </ng-container>
+              <ng-template #userAddress>
+                {{ currentUser.address }}
+                <button mat-icon-button color="accent" class="small-icon-button" (click)="editAddress()">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+            </li>
+            <li>
+              <strong>Phone:</strong>
+              <ng-container *ngIf="showPhoneForm; else userPhone">
+                <app-profile-phone [user]="currentUser" (phoneUpdated)="onPhoneUpdate()"></app-profile-phone>
+              </ng-container>
+              <ng-template #userPhone>
+                {{ currentUser.phoneNumber }}
+                <button mat-icon-button color="accent" class="small-icon-button" (click)="editPhone()">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+            </li>
             <li><strong>Last Signed In:</strong> {{ currentUser.lastSignInDate | date:'medium' }}</li>
           </ul>
       </div>
@@ -35,12 +57,12 @@
     <ng-container *ngIf="role !== 'admin'">
       <div class="row">
         <div  class="col-12 col-md-6">
-          <button mat-raised-button color="accent" aria-label="services-button" routerLink="/service-management">Services</button>
+          <button mat-raised-button color="accent" aria-label="services-button" class="feature-button" routerLink="/service-management">Services</button>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-md-6">
-          <button mat-raised-button color="accent" aria-label="invoice-button" routerLink="/cart">Invoice</button>
+          <button mat-raised-button color="accent" aria-label="invoice-button" class="feature-button" routerLink="/cart">Invoice</button>
         </div>
       </div>
     </ng-container>
