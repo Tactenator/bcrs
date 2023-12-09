@@ -1,11 +1,19 @@
-<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
-  <div class="row">
-    <mat-form-field class="col-12 col-md-6">
-      <mat-label>Address</mat-label>
-      <input matInput formControlName="address">
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <button mat-raised-button color="primary" class="col-12 col-md-6" type="submit" [disabled]="!addressForm.valid">Update Address</button>
-  </div>
-</form>
+<ng-container *ngIf="showAddressForm; else userAddress">
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <button mat-raised-button color="primary" class="col-12 col-md-6" type="submit" [disabled]="!addressForm.valid">Update Address</button>
+    </div>
+  </form>
+</ng-container>
+<ng-template #userAddress>
+  {{ user.address }}
+  <button mat-icon-button color="accent" class="small-icon-button" (click)="editAddress()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</ng-template>

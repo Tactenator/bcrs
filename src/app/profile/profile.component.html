@@ -21,27 +21,11 @@
             <li><strong>Email:</strong> {{ currentUser.email }}</li>
             <li>
               <strong>Address:</strong>
-              <ng-container *ngIf="showAddressForm; else userAddress">
-                <app-profile-address [user]="currentUser" (addressUpdated)="onAddressUpdate()"></app-profile-address>
-              </ng-container>
-              <ng-template #userAddress>
-                {{ currentUser.address }}
-                <button mat-icon-button color="accent" class="small-icon-button" (click)="editAddress()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </ng-template>
+              <app-profile-address [user]="currentUser"></app-profile-address>
             </li>
             <li>
               <strong>Phone:</strong>
-              <ng-container *ngIf="showPhoneForm; else userPhone">
-                <app-profile-phone [user]="currentUser" (phoneUpdated)="onPhoneUpdate()"></app-profile-phone>
-              </ng-container>
-              <ng-template #userPhone>
-                {{ currentUser.phoneNumber }}
-                <button mat-icon-button color="accent" class="small-icon-button" (click)="editPhone()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </ng-template>
+              <app-profile-phone [user]="currentUser"></app-profile-phone>
             </li>
             <li><strong>Last Signed In:</strong> {{ currentUser.lastSignInDate | date:'medium' }}</li>
           </ul>

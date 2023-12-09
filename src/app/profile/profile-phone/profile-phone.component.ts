@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { SecurityService } from 'src/app/security/security.service';
@@ -11,9 +11,9 @@ import { UserService } from 'src/app/user-configuration/user.service';
 })
 export class ProfilePhoneComponent implements OnInit {
   @Input() user: User;
-  @Output() phoneUpdated = new EventEmitter<void>();
 
   phoneForm: FormGroup;
+  showPhoneForm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -33,12 +33,17 @@ export class ProfilePhoneComponent implements OnInit {
     });
   }
 
+  editPhone() {
+    this.showPhoneForm = true;
+  }
+
   onSubmit() {
     const phoneNumber = this.phoneForm.controls['phoneNumber'].value;
     this.userService.editUser({...this.user, phoneNumber})
       .subscribe(updatedUser => {
-        this.phoneUpdated.emit();
-        this.securityService.setUser(updatedUser);
+        this.showPhoneForm = false;
+        const lastSignInDate = this.user.lastSignInDate;
+        this.securityService.setUser({...updatedUser, lastSignInDate});
       });
   }
 }
