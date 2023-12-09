@@ -33,17 +33,12 @@
       </div>
     </div>
     <div class="row">
-      <!-- <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
-        <button mat-raised-button color="accent" aria-label="cart-button" routerLink="/cart">Cart</button>
-      </div> -->
-    </div>
-    <div class="row">
-      <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
+      <div *ngIf="role !== 'admin'" class="col-12 col-md-6">
         <button mat-raised-button color="accent" aria-label="services-button" routerLink="/service-management">Services</button>
       </div>
     </div>
     <div class="row">
-      <div *ngIf="role !== 'Admin'" class="col-12 col-md-6">
+      <div *ngIf="role !== 'admin'" class="col-12 col-md-6">
         <button mat-raised-button color="accent" aria-label="invoice-button" routerLink="/cart">Invoice</button>
       </div>
     </div>
