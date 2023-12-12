@@ -7,7 +7,8 @@
     "build": "ng build",
     "server": "nodemon ./bin/www",
     "client": "ng serve --open",
-    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "render-deploy": "ng build --configuration=production"
   },
   "private": true,
   "dependencies": {
@@ -55,5 +56,9 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "nodemon": "^3.0.1",
     "typescript": "~5.1.3"
+  },
+  "engines": {
+    "node": "18.12.1",
+    "npm": "8.19.2"
   }
 }
